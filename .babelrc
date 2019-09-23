@@ -1,0 +1,19 @@
+{
+  "presets": [
+    "env",
+    "react",
+    "es2015",
+    "stage-0"
+  ],
+  "plugins": [
+    "transform-react-remove-prop-types",
+    "transform-react-constant-elements",
+    "transform-react-inline-elements",
+    "transform-runtime",
+    "add-module-exports",
+    "transform-decorators-legacy",
+    "transform-react-display-name",
+    "transform-object-rest-spread",
+    "transform-class-properties"
+  ]
+}
