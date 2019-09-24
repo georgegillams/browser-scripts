@@ -8,8 +8,6 @@
 // @grant    		none
 // ==/UserScript==
 
-/* eslint-disable */
-
 function checkForFreeBoosts() {
   let availableBoostCount = 0;
 
@@ -18,17 +16,16 @@ function checkForFreeBoosts() {
     const element = allDivElements[i];
     if (element.className.includes('boost')) {
       if (
-        element.className.includes('boost--boosting') ||
-        element.className.includes('boost-state-locked') ||
-        element.className.includes('boost-state-used')
+        !element.className.includes('boost--boosting') &&
+        !element.className.includes('boost-state-locked') &&
+        !element.className.includes('boost-state-used')
       ) {
-        continue;
+        availableBoostCount += 1;
+        element.style.backgroundColor = 'hotpink';
+        element.style.color = 'white';
+        element.style.borderColor = 'black';
+        element.style.opacity = '1';
       }
-      availableBoostCount += 1;
-      element.style.backgroundColor = 'hotpink';
-      element.style.color = 'white';
-      element.style.borderColor = 'black';
-      element.style.opacity = '1';
     }
   }
 

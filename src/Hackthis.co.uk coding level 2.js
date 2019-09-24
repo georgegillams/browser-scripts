@@ -8,6 +8,7 @@
 // @description:en Calculates and fills in the solution to coding level 2 on hackthis.co.uk
 // @grant    		none
 // ==/UserScript==
+
 let answer = 'INCOMPLETE';
 
 function decrypt(n) {
