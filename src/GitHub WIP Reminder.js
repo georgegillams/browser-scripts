@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/github_WIP_reminder
 // @include     *github.com*
 // @exclude     none
-// @version     3
+// @version     4
 // @description:en	Adds an reminder to not review WIP PR's
 // @description	Adds an reminder to not review WIP PR's
 // @grant    		none
@@ -25,7 +25,7 @@ function addReminder() {
         if (element.parentElement.parentElement.className.includes("labels css-truncate")) {
           let newElement = document.createElement('div');
           newElement.innerText = `HEY THIS IS WIP!`;
-          newElement.style.backgroundColor = 'rgb(214, 11, 0)';
+          newElement.style.backgroundColor = '#b60205';
           newElement.style.color = 'white';
           newElement.style.fontSize = '2rem';
           newElement.style.position = 'fixed';
