@@ -10,9 +10,23 @@
 // @description	Adds an option to GitHub PRs to auto-merge them. The tab must be kept open for the merge to be performed.
 // ==/UserScript==
 
-/* eslint-disable */
-
 let testCount = 0;
+
+function getLocalStorageUrls() {
+  const automergeUrlsString = window.localStorage.getItem('AUTOMERGE_URLS');
+  const automergeUrls = automergeUrlsString
+    ? JSON.parse(automergeUrlsString)
+    : [];
+  return automergeUrls;
+}
+
+function willAutoMerge() {
+  const automergeUrls = getLocalStorageUrls();
+  if (automergeUrls.includes(window.location.href)) {
+    return true;
+  }
+  return false;
+}
 
 function requestNotificationPermissions() {
   if (!('Notification' in window) || Notification.permission === 'denied') {
@@ -23,7 +37,8 @@ function requestNotificationPermissions() {
 function createMergedNotification() {
   Notification.requestPermission();
   if ('Notification' in window && Notification.permission !== 'denied') {
-    const notification = new Notification('PR merged!', {
+    // eslint-disable-next-line no-unused-vars
+    const not = new Notification('PR merged!', {
       body: `Your PR was merged automatically! ${window.location.href}`,
     });
   }
@@ -61,6 +76,20 @@ function createNotificationIfNecessary() {
   }
 }
 
+function saveAutoMergeUrls(automergeUrls) {
+  try {
+    window.localStorage.setItem(
+      'AUTOMERGE_URLS',
+      JSON.stringify(automergeUrls),
+    );
+  } catch (e) {
+    // eslint-disable-next-line no-alert
+    window.alert(
+      'There was a problem writing to localStorage. Check that the quota has not been exceeded.',
+    );
+  }
+}
+
 function createButton() {
   const mergeButton = document.createElement('button');
   mergeButton.innerText = `AUTO MERGE PR`;
@@ -73,6 +102,7 @@ function createButton() {
   mergeButton.style.backgroundColor = '#0770E3';
   mergeButton.style.borderRadius = '0.25rem';
   mergeButton.style.marginTop = '1rem';
+  // eslint-disable-next-line
   mergeButton.onclick = toggleAutoMerge;
 
   const mergeMessageElements = document.getElementsByClassName('merge-message');
@@ -91,68 +121,12 @@ function getAutoMergeButton() {
   return addedButton;
 }
 
-function createButtonIfNecessary() {
-  if (!getAutoMergeButton()) {
-    createButton();
-    updateUI();
-  }
-}
-
-function saveAutoMergeUrls(automergeUrls) {
-  try {
-    window.localStorage.setItem(
-      'AUTOMERGE_URLS',
-      JSON.stringify(automergeUrls),
-    );
-  } catch (e) {
-    window.alert(
-      'There was a problem writing to localStorage. Check that the quota has not been exceeded.',
-    );
-  }
-}
-
 function removeNotificationIfNecessary() {
   const addedNotification = getNotification();
 
   if (addedNotification && !willAutoMerge()) {
     addedNotification.remove();
   }
-}
-
-function getLocalStorageUrls() {
-  const automergeUrlsString = window.localStorage.getItem('AUTOMERGE_URLS');
-  const automergeUrls = automergeUrlsString
-    ? JSON.parse(automergeUrlsString)
-    : [];
-  return automergeUrls;
-}
-
-function removeUrlFromLocalStorage() {
-  let automergeUrls = getLocalStorageUrls();
-  if (automergeUrls.includes(window.location.href)) {
-    automergeUrls = automergeUrls.filter(a => a !== window.location.href);
-    createMergedNotification();
-  }
-  saveAutoMergeUrls(automergeUrls);
-}
-
-function willAutoMerge() {
-  const automergeUrls = getLocalStorageUrls();
-  if (automergeUrls.includes(window.location.href)) {
-    return true;
-  }
-  return false;
-}
-
-function toggleAutoMerge() {
-  let automergeUrls = getLocalStorageUrls();
-  if (automergeUrls.includes(window.location.href)) {
-    automergeUrls = automergeUrls.filter(a => a !== window.location.href);
-  } else {
-    automergeUrls.push(window.location.href);
-  }
-  saveAutoMergeUrls(automergeUrls);
-  updateUI();
 }
 
 function updateUI() {
@@ -167,6 +141,33 @@ function updateUI() {
   }
   removeNotificationIfNecessary();
   createNotificationIfNecessary();
+}
+
+function createButtonIfNecessary() {
+  if (!getAutoMergeButton()) {
+    createButton();
+    updateUI();
+  }
+}
+
+function toggleAutoMerge() {
+  let automergeUrls = getLocalStorageUrls();
+  if (automergeUrls.includes(window.location.href)) {
+    automergeUrls = automergeUrls.filter(a => a !== window.location.href);
+  } else {
+    automergeUrls.push(window.location.href);
+  }
+  saveAutoMergeUrls(automergeUrls);
+  updateUI();
+}
+
+function removeUrlFromLocalStorage() {
+  let automergeUrls = getLocalStorageUrls();
+  if (automergeUrls.includes(window.location.href)) {
+    automergeUrls = automergeUrls.filter(a => a !== window.location.href);
+    createMergedNotification();
+  }
+  saveAutoMergeUrls(automergeUrls);
 }
 
 function mergeIfReady() {

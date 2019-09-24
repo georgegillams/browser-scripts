@@ -8,6 +8,7 @@
 // @description:en Calculates and fills in the solution to coding level 1 on hackthis.co.uk
 // @grant    		none
 // ==/UserScript==
+
 let sortedString = 'INCOMPLETE';
 
 function solveLevel() {
