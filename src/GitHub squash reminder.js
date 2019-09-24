@@ -10,29 +10,26 @@
 // @description   	Adds an reminder to squash PRs that have > 1 commit
 // ==/UserScript==
 
-/* eslint-disable */
-
 let lastModifiedPr = null;
 
 function addReminder() {
-  let prId = `${window.location}`.split('pull/')[1];
+  const prId = `${window.location}`.split('pull/')[1];
   if (lastModifiedPr !== prId) {
-    let commitCount = parseInt(
+    const commitCount = parseInt(
       document.getElementById('commits_tab_counter').textContent,
+      10,
     );
     if (commitCount !== 1) {
       let allElements = document.getElementsByTagName('DIV');
       for (let i = 0; i < allElements.length; i += 1) {
-        let element = allElements[i];
+        const element = allElements[i];
         if (element.className === 'merge-message') {
-          element.innerHTML =
-            `<div style="display: block;margin-bottom: -2rem;text-decoration: none;font-weight: bold;font-size: 1.5rem;font-family: Quattrocento Sans,sans-serif;color: #e02626;">REMEMBER TO SQUASH!</div> <br/> <br/>` +
-            element.innerHTML;
+          element.innerHTML = `<div style="display: block;margin-bottom: -2rem;text-decoration: none;font-weight: bold;font-size: 1.5rem;font-family: Quattrocento Sans,sans-serif;color: #e02626;">REMEMBER TO SQUASH!</div> <br/> <br/>${element.innerHTML}`;
         }
       }
       allElements = document.getElementsByTagName('BUTTON');
       for (let i = 0; i < allElements.length; i += 1) {
-        let element = allElements[i];
+        const element = allElements[i];
         if (
           element.textContent &&
           element.textContent.includes('Merge pull request')
@@ -65,6 +62,7 @@ function worker() {
   try {
     addReminder();
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
   }
 }
