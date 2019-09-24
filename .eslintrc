@@ -28,7 +28,7 @@
   "rules": {
     "import/extensions": ["off", "never"],
     "prettier/prettier": "error",
-    "react/jsx-filename-extension": "on",
+    "react/jsx-filename-extension": 0,
     "import/no-extraneous-dependencies": "off",
     // This is superceded by jsx-a11y/label-has-associated-control
     "jsx-a11y/label-has-for": "off",

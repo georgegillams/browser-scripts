@@ -3,30 +3,32 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/gurushots_boost
 // @include     *gurushots.com/*
 // @exclude     none
-// @version     6
+// @version     7
 // @description:en	Makes the boost buttons on GuruShots.com stand out more when a free boost is available.
 // @grant    		none
 // ==/UserScript==
 
+/* eslint-disable */
+
 function checkForFreeBoosts() {
   let availableBoostCount = 0;
 
-  const allDivElements = document.getElementsByTagName("DIV");
+  const allDivElements = document.getElementsByTagName('DIV');
   for (let i = 0; i < allDivElements.length; i += 1) {
     const element = allDivElements[i];
-    if (element.className.includes("boost")) {
+    if (element.className.includes('boost')) {
       if (
-        element.className.includes("boost--boosting") ||
-        element.className.includes("boost-state-locked") ||
-        element.className.includes("boost-state-used")
+        element.className.includes('boost--boosting') ||
+        element.className.includes('boost-state-locked') ||
+        element.className.includes('boost-state-used')
       ) {
         continue;
       }
       availableBoostCount += 1;
-      element.style.backgroundColor = "hotpink";
-      element.style.color = "white";
-      element.style.borderColor = "black";
-      element.style.opacity = "1";
+      element.style.backgroundColor = 'hotpink';
+      element.style.color = 'white';
+      element.style.borderColor = 'black';
+      element.style.opacity = '1';
     }
   }
 
@@ -36,8 +38,8 @@ function checkForFreeBoosts() {
 
   for (let i = 0; i < allDivElements.length; i += 1) {
     const element = allDivElements[i];
-    if (element.className === "w-max") {
-      element.style.backgroundColor = "hotpink";
+    if (element.className === 'w-max') {
+      element.style.backgroundColor = 'hotpink';
     }
   }
 }
