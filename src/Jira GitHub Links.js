@@ -5,11 +5,13 @@
 // @include     *github.skyscannertools.net*
 // @include     *gojira.skyscanner.net*
 // @exclude     none
-// @version     8
+// @version     9
 // @description:en	Creates links from GitHub PRs to their respective Jira ticket and vice-versa
 // @grant    		none
 // @description Creates links from GitHub PRs to their respective Jira ticket and vice-versa
 // ==/UserScript==
+
+/* eslint-disable */
 
 function makeGHLink() {
   let allElements = document.getElementsByTagName('H1');
@@ -56,7 +58,7 @@ function makeJiraLink() {
       newElement1.style.marginLeft = '10px';
       newElement1.id = 'jira_github_links_result';
 
- 		  let newElement2 = document.createElement('a');
+      let newElement2 = document.createElement('a');
       newElement2.innerText = `View PRs for ${text} on GitHub (Internal)`;
       newElement2.href = url2;
       newElement2.style.color = '#00b2d6ff';
@@ -90,5 +92,3 @@ function worker() {
 }
 
 setInterval(worker, 2000);
-
-

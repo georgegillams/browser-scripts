@@ -1,0 +1,56 @@
+{
+  "name": "browser-scripts",
+  "version": "1.0.0",
+  "description": "A collection of scripts that I use to make websites work harder for me.",
+  "main": "none",
+  "scripts": {
+    "test": "npm run lint",
+    "lint": "npm run lint:js",
+    "lint:js": "eslint . --ext .js,.jsx",
+    "lint:js:fix": "eslint . --ext .js,.jsx --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/georgegillams/browser-scripts.git"
+  },
+  "author": "George Gillams",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/georgegillams/browser-scripts/issues"
+  },
+  "homepage": "https://github.com/georgegillams/browser-scripts#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "8.2.6",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "7.1.5",
+    "babel-plugin-add-module-exports": "^1.0.2",
+    "babel-plugin-dynamic-import-node": "1.2.0",
+    "babel-plugin-react-transform": "3.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-plugin-transform-react-constant-elements": "6.23.0",
+    "babel-plugin-transform-react-inline-elements": "6.22.0",
+    "babel-plugin-transform-react-remove-prop-types": "0.4.24",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-0": "6.24.1",
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-skyscanner-with-prettier": "^0.8.0",
+    "eslint-import-resolver-webpack": "^0.10.1",
+    "eslint-plugin-flowtype": "^3.13.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-redux-saga": "^0.9.0",
+    "eslint_d": "^7.3.0",
+    "jest-cli": "^23.6.0",
+    "lint-staged": "^9.2.3"
+  }
+}

@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/github_WIP_reminder
 // @include     *github.com*
 // @exclude     none
-// @version     4
+// @version     5
 // @description:en	Adds an reminder to not review WIP PR's
 // @description	Adds an reminder to not review WIP PR's
 // @grant    		none
@@ -12,18 +12,18 @@
 let lastModifiedPr = null;
 
 function addReminder() {
-  let prId = `${window.location}`.split('pull/')[1];
-  if (lastModifiedPr === prId) {
-    return;
-  } else {
-    let allElements = document.getElementsByTagName('SPAN');
+  const prId = `${window.location}`.split('pull/')[1];
+  if (lastModifiedPr !== prId) {
+    const allElements = document.getElementsByTagName('SPAN');
     for (let i = 0; i < allElements.length; i += 1) {
-      let element = allElements[i];
+      const element = allElements[i];
       if (element.innerText.includes('WIP')) {
-          console.log(`element`, element)
-        console.log(`element.parentElement.parentElement`, element.parentElement.parentElement);
-        if (element.parentElement.parentElement.className.includes("labels css-truncate")) {
-          let newElement = document.createElement('div');
+        if (
+          element.parentElement.parentElement.className.includes(
+            'labels css-truncate',
+          )
+        ) {
+          const newElement = document.createElement('div');
           newElement.innerText = `HEY THIS IS WIP!`;
           newElement.style.backgroundColor = '#b60205';
           newElement.style.color = 'white';
@@ -38,12 +38,12 @@ function addReminder() {
           newElement.style.display = 'flex';
           newElement.style.alignItems = 'center';
           newElement.style.justifyContent = 'center';
-          newElement.style.transition = "all 0.4s";
-          newElement.style.fontWeight = "bold";
-          newElement.onclick = function() {
+          newElement.style.transition = 'all 0.4s';
+          newElement.style.fontWeight = 'bold';
+          newElement.onclick = () => {
             newElement.style.opacity = 0;
-            newElement.style.pointerEvents = "none";
-          }
+            newElement.style.pointerEvents = 'none';
+          };
           element.parentElement.parentElement.appendChild(newElement);
         }
       }
@@ -53,4 +53,3 @@ function addReminder() {
 }
 
 setInterval(addReminder, 2000);
-

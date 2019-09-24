@@ -3,11 +3,13 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira_hide_legend
 // @include     *gojira.skyscanner.net*
 // @exclude     none
-// @version     1
+// @version     2
 // @description:en	Hides the pointless legend.
 // @grant    		none
 // @description	Hides the pointless legend.
 // ==/UserScript==
+
+/* eslint-disable */
 
 let tableGone = false;
 let tableBackgroundGone = false;
@@ -17,13 +19,16 @@ function hideLegend() {
     return;
   }
 
-  const tableElements = document.getElementsByTagName("TABLE");
-  
+  const tableElements = document.getElementsByTagName('TABLE');
+
   for (let i = 0; i < tableElements.length; i += 1) {
     const tableElement = tableElements[i];
- 
+
     const tableElementText = tableElement.innerText;
-    if(tableElementText.includes("Completed") && tableElementText.includes("Commitment")) {
+    if (
+      tableElementText.includes('Completed') &&
+      tableElementText.includes('Commitment')
+    ) {
       tableElement.style.display = 'none';
       tableGone = true;
       break;
@@ -36,12 +41,15 @@ function hideLegendBackground() {
     return;
   }
 
-  const divElements = document.getElementsByTagName("DIV");
-  
+  const divElements = document.getElementsByTagName('DIV');
+
   for (let i = 0; i < divElements.length; i += 1) {
     const divElement = divElements[i];
- 
-    if(divElement.style.backgroundColor === "rgb(255, 255, 255)" && divElement.style.opacity === "0.85") {
+
+    if (
+      divElement.style.backgroundColor === 'rgb(255, 255, 255)' &&
+      divElement.style.opacity === '0.85'
+    ) {
       divElement.style.display = 'none';
       tableBackgroundGone = true;
       break;
@@ -59,4 +67,3 @@ function worker() {
 }
 
 setInterval(worker, 1500);
-

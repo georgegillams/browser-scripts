@@ -4,25 +4,27 @@
 // @include     *github.com*
 // @include     *github.skyscannertools.net*
 // @exclude     none
-// @version     22
+// @version     23
 // @description:en	Adds an option to GitHub PRs to auto-merge them. The tab must be kept open for the merge to be performed.
 // @grant    		none
 // @description	Adds an option to GitHub PRs to auto-merge them. The tab must be kept open for the merge to be performed.
 // ==/UserScript==
 
+/* eslint-disable */
+
 let testCount = 0;
 
 function requestNotificationPermissions() {
-  if (!("Notification" in window) || (Notification.permission === "denied") ) {
+  if (!('Notification' in window) || Notification.permission === 'denied') {
     Notification.requestPermission();
   }
 }
 
 function createMergedNotification() {
   Notification.requestPermission();
-  if (("Notification" in window) && (Notification.permission !== "denied") ) {
-    var notification = new Notification("PR merged!", {
-      body: `Your PR was merged automatically! ${window.location.href}`
+  if ('Notification' in window && Notification.permission !== 'denied') {
+    const notification = new Notification('PR merged!', {
+      body: `Your PR was merged automatically! ${window.location.href}`,
     });
   }
 }
@@ -98,10 +100,14 @@ function createButtonIfNecessary() {
 
 function saveAutoMergeUrls(automergeUrls) {
   try {
-    window.localStorage.setItem('AUTOMERGE_URLS', JSON.stringify(automergeUrls));
+    window.localStorage.setItem(
+      'AUTOMERGE_URLS',
+      JSON.stringify(automergeUrls),
+    );
   } catch (e) {
-    console.log(e);
-    window.alert('There was a problem writing to localStorage. Check that the quota has not been exceeded.')
+    window.alert(
+      'There was a problem writing to localStorage. Check that the quota has not been exceeded.',
+    );
   }
 }
 
@@ -122,7 +128,6 @@ function getLocalStorageUrls() {
 }
 
 function removeUrlFromLocalStorage() {
-  console.log('CLEANING UP');
   let automergeUrls = getLocalStorageUrls();
   if (automergeUrls.includes(window.location.href)) {
     automergeUrls = automergeUrls.filter(a => a !== window.location.href);
@@ -142,10 +147,8 @@ function willAutoMerge() {
 function toggleAutoMerge() {
   let automergeUrls = getLocalStorageUrls();
   if (automergeUrls.includes(window.location.href)) {
-    console.log('REMOVING PR');
     automergeUrls = automergeUrls.filter(a => a !== window.location.href);
   } else {
-    console.log('ADDING PR');
     automergeUrls.push(window.location.href);
   }
   saveAutoMergeUrls(automergeUrls);
@@ -171,7 +174,6 @@ function mergeIfReady() {
     return;
   }
 
-  console.log('TESTING MERGEABILITY');
   testCount += 1;
 
   let allElements = document.getElementsByTagName('BUTTON');
@@ -184,7 +186,6 @@ function mergeIfReady() {
       !element.disabled &&
       element.innerText === 'Delete branch'
     ) {
-      console.log('DELETING BRANCH');
       element.click();
       return;
     }
@@ -196,9 +197,9 @@ function mergeIfReady() {
     if (
       element.textContent &&
       !element.disabled &&
-      (element.innerText === 'Confirm merge' || element.innerText === 'Confirm squash and merge')
+      (element.innerText === 'Confirm merge' ||
+        element.innerText === 'Confirm squash and merge')
     ) {
-      console.log('CONFIRMING MERGE');
       element.click();
       return;
     }
@@ -210,9 +211,10 @@ function mergeIfReady() {
       element.textContent &&
       !element.disabled &&
       !element.className.includes('btn-danger') &&
-      (element.innerText === 'Merge pull request' || element.innerText === 'Squash and merge' || element.innerText === 'SMERGE!')
+      (element.innerText === 'Merge pull request' ||
+        element.innerText === 'Squash and merge' ||
+        element.innerText === 'SMERGE!')
     ) {
-      console.log('MERGING');
       element.click();
     }
   }
@@ -226,7 +228,7 @@ function cleanupLocalStorage() {
 
   const mergedBadgeElement = mergedBadgeElements[0];
   if (mergedBadgeElement && mergedBadgeElement.innerText === ' Merged') {
-      removeUrlFromLocalStorage();
+    removeUrlFromLocalStorage();
   }
 }
 
@@ -234,8 +236,6 @@ function reload() {
   if (!willAutoMerge()) {
     return;
   }
-
-  console.log('RELOADING');
 
   window.location.reload();
 }
@@ -245,15 +245,15 @@ function worker() {
     mergeIfReady();
     cleanupLocalStorage();
     createButtonIfNecessary();
-		requestNotificationPermissions();
+    requestNotificationPermissions();
 
     if (testCount > 200) {
       reload();
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
   }
 }
 
 setInterval(worker, 1500);
-

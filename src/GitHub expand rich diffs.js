@@ -4,7 +4,7 @@
 // @include     *github.com*
 // @include     *github.skyscannertools.net*
 // @exclude     none
-// @version     5
+// @version     6
 // @description:en	Creates a button which can expand all rich diffs in a PR.
 // @grant    		none
 // @description   	Creates a button which can expand all rich diffs in a PR.
@@ -39,9 +39,9 @@ function makeGHButton() {
   const newElement = document.createElement('div');
   newElement.style.width = '100%';
   newElement.style.display = 'flex';
-	newElement.style.justifyContent = 'center';
+  newElement.style.justifyContent = 'center';
 
-  newElement.appendChild(buttonElement)
+  newElement.appendChild(buttonElement);
 
   filesElement.appendChild(document.createElement('br'));
   filesElement.appendChild(newElement);
@@ -49,7 +49,7 @@ function makeGHButton() {
 
 function makeLinks() {
   const docLoc = document.location.href;
-  if(!docLoc.includes('pull') || !docLoc.includes('files')) {
+  if (!docLoc.includes('pull') || !docLoc.includes('files')) {
     return;
   }
 
@@ -65,9 +65,9 @@ function worker() {
   try {
     makeLinks();
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
   }
 }
 
 setInterval(worker, 2000);
-
