@@ -4,8 +4,8 @@
   "description": "A collection of scripts that I use to make websites work harder for me.",
   "main": "none",
   "scripts": {
-    "test": "npm run lint",
-    "lint": "npm run lint:js",
+    "test": "yarn run lint",
+    "lint": "yarn run lint:js",
     "lint:js": "eslint . --ext .js,.jsx",
     "lint:js:fix": "eslint . --ext .js,.jsx --fix"
   },
