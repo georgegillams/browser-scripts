@@ -4,7 +4,7 @@
 // @include     *github.com*
 // @include     *github.skyscannertools.net*
 // @exclude     none
-// @version     24
+// @version     25
 // @description:en	Adds an option to GitHub PRs to auto-merge them. The tab must be kept open for the merge to be performed.
 // @grant    		none
 // @description	Adds an option to GitHub PRs to auto-merge them. The tab must be kept open for the merge to be performed.
@@ -104,14 +104,19 @@ function createButton() {
   // eslint-disable-next-line
   mergeButton.onclick = toggleAutoMerge;
 
-  const mergeMessageElements = document.getElementsByClassName('tabnav-tabs');
+  const mergeMessageElements = document.getElementsByClassName('merge-message');
   if (mergeMessageElements.length < 1) {
     return;
   }
 
-  const mergeMessageElement = mergeMessageElements[0];
-  if (mergeMessageElement) {
-    mergeMessageElement.appendChild(mergeButton);
+  const tabNavElements = document.getElementsByClassName('tabnav-tabs');
+  if (tabNavElements.length < 1) {
+    return;
+  }
+
+  const tabNavElement = tabNavElements[0];
+  if (tabNavElement) {
+    tabNavElement.appendChild(mergeButton);
   }
 }
 
