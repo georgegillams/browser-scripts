@@ -1,8 +1,7 @@
 // ==UserScript==
-// @name        GitHub Travis links new tab
-// @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/github_travis_new_tab
-// @include     *github.com*
-// @include     *github.skyscannertools.net*
+// @name        GitHub CI links new tab
+// @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/github_ci_new_tab
+// @include     *github.*
 // @exclude     none
 // @version     7
 // @description:en	Adds rel=no_opener and taget=blank to github travis links on Github

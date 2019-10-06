@@ -10,7 +10,7 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 | ------------------------ | ------------------- | --------------------- |
 |  backpack_docs             |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Backpack%20docs.js)  |  null                   |
 |  countdown_spakles         |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Countdown%20sparkles.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/390085-countdown-spakliness)  |
-|  github_travis_new_tab     |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/GitHub%20Travis%20links%20new%20tab.js)  |  null                   |
+|  github_ci_new_tab         |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/GitHub%20CI%20links%20new%20tab.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/390827-github-ci-links-new-tab)  |
 |  github_auto_merge         |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/GitHub%20auto%20merge.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/389944-github-auto-merge)  |
 |  github_squash_reminder    |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/GitHub%20squash%20reminder.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/368661-github-squash-reminder)  |
 |  github_WIP_reminder       |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/GitHub%20WIP%20Reminder.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/382563-github-wip-reminder)  |

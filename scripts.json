@@ -10,9 +10,9 @@
     "greasyforkId": "390085-countdown-spakliness"
   },
   {
-    "id": "github_travis_new_tab",
-    "fileName": "GitHub Travis links new tab.js",
-    "greasyforkId": null
+    "id": "github_ci_new_tab",
+    "fileName": "GitHub CI links new tab.js",
+    "greasyforkId": "390827-github-ci-links-new-tab"
   },
   {
     "id": "github_auto_merge",
