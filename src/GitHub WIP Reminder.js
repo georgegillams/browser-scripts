@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/github_WIP_reminder
 // @include     *github.com*
 // @exclude     none
-// @version     5
+// @version     6
 // @description:en	Adds an reminder to not review WIP PR's
 // @description	Adds an reminder to not review WIP PR's
 // @grant    		none
@@ -31,10 +31,10 @@ function addReminder() {
           newElement.style.position = 'fixed';
           newElement.style.left = 0;
           newElement.style.top = 0;
-          newElement.style.zIndex = 40000;
+          newElement.style.zIndex = 400;
           newElement.style.width = '100vw';
-          newElement.style.height = '5rem';
-          newElement.style.padding = '1rem';
+          newElement.style.height = '8rem';
+          newElement.style.padding = '4rem 1rem 1rem 1rem';
           newElement.style.display = 'flex';
           newElement.style.alignItems = 'center';
           newElement.style.justifyContent = 'center';
