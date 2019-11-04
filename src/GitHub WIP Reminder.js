@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/github_WIP_reminder
 // @include     *github.com*
 // @exclude     none
-// @version     6
+// @version     7
 // @description:en	Adds an reminder to not review WIP PR's
 // @description	Adds an reminder to not review WIP PR's
 // @grant    		none
@@ -25,7 +25,7 @@ function addReminder() {
         ) {
           const newElement = document.createElement('div');
           newElement.innerText = `HEY THIS IS WIP!`;
-          newElement.style.backgroundColor = '#b60205';
+          newElement.style.backgroundColor = '#d1435b';
           newElement.style.color = 'white';
           newElement.style.fontSize = '2rem';
           newElement.style.position = 'fixed';
