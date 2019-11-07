@@ -5,7 +5,7 @@
 // @include     *github.skyscannertools.net*
 // @include     *gojira.skyscanner.net*
 // @exclude     none
-// @version     9
+// @version     10
 // @description:en	Creates links from GitHub PRs to their respective Jira ticket and vice-versa
 // @grant    		none
 // @description Creates links from GitHub PRs to their respective Jira ticket and vice-versa
@@ -45,9 +45,9 @@ function makeJiraLink() {
     if (elementMatch && elementMatch.length > 0) {
       const text = element.innerText;
 
-      const url1 = `https://github.com/pulls?utf8=%E2%9C%93&q=is%3Apr+repo%3ASkyscanner%2Fbackpack+repo%3ASkyscanner%2Fbackpack-react-native+repo%3ASkyscanner%2Fbackpack-docs+repo%3ASkyscanner%2Fbackpack-react-scripts+repo%3ASkyscanner%2Fbackpack-node-sass+repo%3ASkyscanner%2Feslint-plugin-backpack+repo%3ASkyscanner%2Feslint-config-skyscanner+repo%3ASkyscanner%2Feslint-config-skyscanner+repo%3ASkyscanner%2Fbackpack-ios+repo%3ASkyscanner%2Fbackpack-android+${text}`;
+      const url1 = `https://github.com/pulls?utf8=%E2%9C%93&q=is%3Apr+repo%3ASkyscanner%2Fbackpack+repo%3ASkyscanner%2Fbackpack-react-native+repo%3ASkyscanner%2Fbackpack-docs+repo%3ASkyscanner%2Fbackpack-react-scripts+repo%3ASkyscanner%2Fbackpack-node-sass+repo%3ASkyscanner%2Feslint-plugin-backpack+repo%3ASkyscanner%2Feslint-config-skyscanner+repo%3ASkyscanner%2Feslint-config-skyscanner+repo%3ASkyscanner%2Fbackpack-ios+repo%3ASkyscanner%2Fbackpack-android+%22${text}%22`;
 
-      const url2 = `https://github.skyscannertools.net/pulls?utf8=%E2%9C%93&q=is%3Apr+repo%3Aapps-tribe%2Fskyscanner-app+${text}`;
+      const url2 = `https://github.skyscannertools.net/pulls?utf8=%E2%9C%93&q=is%3Apr+repo%3Aapps-tribe%2Fskyscanner-app+%22${text}%22`;
 
       const newElement1 = document.createElement('a');
       newElement1.innerText = `View PRs for ${text} on GitHub (Public)`;
