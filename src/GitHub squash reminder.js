@@ -4,7 +4,7 @@
 // @include     *github.com*
 // @include     *github.skyscannertools.net*
 // @exclude     none
-// @version     7
+// @version     8
 // @description:en	Adds an reminder to squash PRs that have > 1 commit
 // @grant    		none
 // @description   	Adds an reminder to squash PRs that have > 1 commit
@@ -13,8 +13,10 @@
 let lastModifiedPr = null;
 
 function addReminder() {
-  const prId = `${window.location}`.split('pull/')[1];
-  if (lastModifiedPr !== prId) {
+    const currentReminder = document.getElementById('squash_reminder_button');
+    console.log(`currentReminder`, currentReminder);
+    if (currentReminder) { return; }
+
     const commitCount = parseInt(
       document.getElementById('commits_tab_counter').textContent,
       10,
@@ -36,26 +38,25 @@ function addReminder() {
         ) {
           element.disabled = true;
           element.textContent = 'MERGE ONLY ONCE SQUASHED!';
+          element.id = "squash_reminder_button";
           element.style.backgroundImage =
             'linear-gradient(-180deg, #e02626 0%, #9F2D27 90%)';
           element.style.color = 'white';
         }
-        if (
-          element.textContent &&
-          element.textContent.includes('Squash and merge')
-        ) {
-          element.textContent = 'SMERGE!';
-        }
-        if (
-          element.textContent &&
-          element.textContent.includes('Confirm squash and merge')
-        ) {
-          element.textContent = 'Confirm SMERGE!';
-        }
+        // if (
+        //   element.textContent &&
+        //   element.textContent.includes('Squash and merge')
+        // ) {
+        //   element.textContent = 'SMERGE!';
+        // }
+        // if (
+        //   element.textContent &&
+        //   element.textContent.includes('Confirm squash and merge')
+        // ) {
+        //   element.textContent = 'Confirm SMERGE!';
+        // }
       }
     }
-    lastModifiedPr = prId;
-  }
 }
 
 function worker() {
@@ -68,3 +69,4 @@ function worker() {
 }
 
 setInterval(worker, 2000);
+
