@@ -1,6 +1,6 @@
 #  browser-scripts
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/georgegillams/browser-scripts.svg)](https://greenkeeper.io/)
+
 
 A collection of scripts that I use to make websites work harder for me 😜
 
