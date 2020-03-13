@@ -63,5 +63,10 @@
     "id": "no_vantablack",
     "fileName": "No vantablack.js",
     "greasyforkId": "390481-no-vantablack"
+  },
+  {
+    "id": "ncovlive_auto_filter",
+    "fileName": "NcovLive auto filter.js",
+    "greasyforkId": "397849-ncovlive-auto-filter"
   }
 ]
