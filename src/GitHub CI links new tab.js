@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/github_ci_new_tab
 // @include     *github.*
 // @exclude     none
-// @version     7
+// @version     8
 // @description:en	Adds rel=no_opener and taget=blank to github travis links on Github
 // @grant    		none
 // @description   	Adds rel=no_opener and taget=blank to github travis links on Github
@@ -16,7 +16,9 @@ function addTarget() {
     if (
       element.href &&
       element.href.includes &&
-      (element.href.includes('travis') || element.href.includes('jenkins'))
+      (element.href.includes('travis') ||
+        element.href.includes('jenkins') ||
+        element.href.includes('check_run_id'))
     ) {
       element.target = '_blank';
       element.rel = 'noopener noreferrer';
