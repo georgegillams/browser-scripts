@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/backpack_docs
 // @include     *backpack.github.io*
 // @exclude     none
-// @version     2
+// @version     4
 // @description:en	Adjusts the layout of backpack docs to make it more laptop-friendly
 // @grant    		none
 // ==/UserScript==
@@ -33,6 +33,17 @@ function fixImgs() {
   }
 }
 
+function fixHeroImgs() {
+  const allElements = document.getElementsByTagName('DIV');
+  for (let i = 0; i < allElements.length; i += 1) {
+    const element = allElements[i];
+    const elementClassName = `${element.className}`;
+    if (elementClassName.includes('bpkdocs-main-hero-image')) {
+      element.style.height = '10rem';
+    }
+  }
+}
+
 function fixAll() {
   const currentUrl = `${window.location}`;
   if (currentUrl === lastModifiedUrl) {
@@ -40,6 +51,7 @@ function fixAll() {
   }
   fixNavs();
   fixImgs();
+  fixHeroImgs();
   lastModifiedUrl = currentUrl;
 }
 
