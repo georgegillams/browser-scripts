@@ -5,6 +5,11 @@
     "greasyforkId": "400764-backpack"
   },
   {
+    "id": "disney_plus_play_pause",
+    "fileName": "Disney Plus Play Pause.js",
+    "greasyforkId": "403470-disney-toggle-play-pause"
+  },
+  {
     "id": "countdown_spakles",
     "fileName": "Countdown sparkles.js",
     "greasyforkId": "390085-countdown-spakliness"

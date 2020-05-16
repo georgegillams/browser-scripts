@@ -11,6 +11,7 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 |  Name                      |  Code                 |  GreasyFork             |
 | ------------------------ | ------------------- | --------------------- |
 |  backpack_docs             |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Backpack%20docs.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/400764-backpack)  |
+|  disney_plus_play_pause    |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Disney%20Plus%20Play%20Pause.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/403470-disney-toggle-play-pause)  |
 |  countdown_spakles         |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Countdown%20sparkles.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/390085-countdown-spakliness)  |
 |  github_ci_new_tab         |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/GitHub%20CI%20links%20new%20tab.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/390827-github-ci-links-new-tab)  |
 |  github_auto_merge         |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/GitHub%20auto%20merge.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/389944-github-auto-merge)  |
