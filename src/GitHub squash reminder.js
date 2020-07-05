@@ -4,7 +4,7 @@
 // @include     *github.com*
 // @include     *github.skyscannertools.net*
 // @exclude     none
-// @version     8
+// @version     9
 // @description:en	Adds an reminder to squash PRs that have > 1 commit
 // @grant    		none
 // @description   	Adds an reminder to squash PRs that have > 1 commit
@@ -12,7 +12,6 @@
 
 function addReminder() {
   const currentReminder = document.getElementById('squash_reminder_button');
-  console.log(`currentReminder`, currentReminder);
   if (currentReminder) {
     return;
   }
