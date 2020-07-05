@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Github expand rich diffs
+// @name        GitHub expand rich diffs
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/github_expand_rich_diffs
 // @include     *github.com*
 // @include     *github.skyscannertools.net*

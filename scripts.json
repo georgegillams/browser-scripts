@@ -15,6 +15,11 @@
     "greasyforkId": "390085-countdown-spakliness"
   },
   {
+    "id": "github_actual-time",
+    "fileName": "GitHub actual time.js",
+    "greasyforkId": "406513-github-actual-time"
+  },
+  {
     "id": "github_ci_new_tab",
     "fileName": "GitHub CI links new tab.js",
     "greasyforkId": "390827-github-ci-links-new-tab"

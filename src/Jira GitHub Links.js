@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Jira Github links
+// @name        Jira GitHub links
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira_github_links
 // @include     *github.com*
 // @include     *github.skyscannertools.net*

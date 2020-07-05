@@ -4,9 +4,9 @@
 // @include     *github.*
 // @exclude     none
 // @version     8
-// @description:en	Adds rel=no_opener and taget=blank to github travis links on Github
+// @description:en	Adds rel=no_opener and taget=blank to github travis links on GitHub
 // @grant    		none
-// @description   	Adds rel=no_opener and taget=blank to github travis links on Github
+// @description   	Adds rel=no_opener and taget=blank to github travis links on GitHub
 // ==/UserScript==
 
 function addTarget() {
