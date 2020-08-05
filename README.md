@@ -10,6 +10,7 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 
 |  Name                      |  Code                 |  GreasyFork             |
 | ------------------------ | ------------------- | --------------------- |
+|  zoom_retry                |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Zoom%20retry%20launch.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/408226-zoom-retry)  |
 |  backpack_docs             |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Backpack%20docs.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/400764-backpack)  |
 |  disney_plus_play_pause    |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Disney%20Plus%20Play%20Pause.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/403470-disney-toggle-play-pause)  |
 |  countdown_spakles         |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Countdown%20sparkles.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/390085-countdown-spakliness)  |
