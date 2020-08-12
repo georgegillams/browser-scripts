@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira_snazzy_columns
 // @include     *gojira.*
 // @exclude     none
-// @version     1
+// @version     2
 // @description:en	Makes your jira board headings more snazzy, so that you stop getting them confused.
 // @grant    		none
 // @description	Makes your jira board headings more snazzy, so that you stop getting them confused.
@@ -12,7 +12,7 @@
 function insertStyleSheetRule(ruleText) {
   const sheets = document.styleSheets;
 
-  if (sheets.length == 0) {
+  if (sheets.length === 0) {
     const style = document.createElement('style');
     style.appendChild(document.createTextNode(''));
     document.head.appendChild(style);

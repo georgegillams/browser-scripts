@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/zoom_retry
 // @include     *zoom.us*
 // @exclude     none
-// @version     1
+// @version     2
 // @description:en	Adds a link to retry launching a Zoom meeting.
 // @grant    		none
 // @description	Adds a link to retry launching a Zoom meeting.
@@ -29,7 +29,8 @@ function createButton() {
   mergeButton.style.borderRadius = '0.25rem';
   mergeButton.style.marginTop = '3rem';
   mergeButton.style.display = 'inline-block';
-  mergeButton.style.marginLeft = 'calc(50% - 3rem)';
+  mergeButton.style.marginLeft = 'auto';
+  mergeButton.style.marginRight = 'auto';
 
   mergeButton.href = getCleanUrl();
 
