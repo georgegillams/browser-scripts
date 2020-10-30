@@ -83,19 +83,19 @@ function saveAutoMergeUrls(automergeUrls, retry = false) {
       JSON.stringify(automergeUrls),
     );
   } catch (e) {
-     if (retry) {
-       // eslint-disable-next-line no-alert
-       window.alert(
-         'There was a problem writing to localStorage. Check that the quota has not been exceeded.',
-       );
-     }else {
-       console.log("clearing jump_to:page_views from local storage and retrying...")
-         window.localStorage.setItem(
-             'jump_to:page_views',
-            '',
-         );
-       saveAutoMergeUrls(automergeUrls, true);
-     }
+    if (retry) {
+      // eslint-disable-next-line no-alert
+      window.alert(
+        'There was a problem writing to localStorage. Check that the quota has not been exceeded.',
+      );
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(
+        'clearing jump_to:page_views from local storage and retrying...',
+      );
+      window.localStorage.setItem('jump_to:page_views', '');
+      saveAutoMergeUrls(automergeUrls, true);
+    }
   }
 }
 
@@ -255,7 +255,7 @@ function reload() {
 }
 
 function worker() {
-    console.log(`worker`);
+  console.log(`worker`);
   try {
     mergeIfReady();
     cleanupLocalStorage();
