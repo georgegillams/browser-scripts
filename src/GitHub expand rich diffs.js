@@ -4,7 +4,7 @@
 // @include     *github.com*
 // @include     *github.skyscannertools.net*
 // @exclude     none
-// @version     6
+// @version     7
 // @description:en	Creates a button which can expand all rich diffs in a PR.
 // @grant    		none
 // @description   	Creates a button which can expand all rich diffs in a PR.
@@ -31,7 +31,7 @@ function makeGHButton() {
   buttonElement.style.fontSize = '1.2rem';
   buttonElement.style.fontWeight = 'bold';
   buttonElement.style.padding = '0.375rem 1.5rem';
-  buttonElement.style.borderRadius = '0.25rem';
+  buttonElement.style.borderRadius = '0.5rem';
   buttonElement.style.color = 'white';
   buttonElement.id = 'expand_all_rich_diffs';
   buttonElement.onclick = expandAllRichDiffs;

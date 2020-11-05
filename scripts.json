@@ -5,11 +5,6 @@
     "greasyforkId": "408483-jira-snazzy-columns"
   },
   {
-    "id": "zoom_retry",
-    "fileName": "Zoom retry launch.js",
-    "greasyforkId": "408226-zoom-retry"
-  },
-  {
     "id": "backpack_docs",
     "fileName": "Backpack docs.js",
     "greasyforkId": "400764-backpack"

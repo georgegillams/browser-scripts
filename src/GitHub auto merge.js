@@ -4,7 +4,7 @@
 // @include     *github.com*
 // @include     *github.skyscannertools.net*
 // @exclude     none
-// @version     27
+// @version     28
 // @description:en	Adds an option to GitHub PRs to auto-merge them. The tab must be kept open for the merge to be performed.
 // @grant    		none
 // @description	Adds an option to GitHub PRs to auto-merge them. The tab must be kept open for the merge to be performed.
@@ -109,7 +109,7 @@ function createButton() {
   mergeButton.id = 'auto_merge_button';
   mergeButton.style.border = 'none';
   mergeButton.style.backgroundColor = '#0770E3';
-  mergeButton.style.borderRadius = '0.25rem';
+  mergeButton.style.borderRadius = '0.5rem';
   // eslint-disable-next-line
   mergeButton.onclick = toggleAutoMerge;
 
@@ -166,7 +166,7 @@ function createButtonIfNecessary() {
 function toggleAutoMerge() {
   let automergeUrls = getLocalStorageUrls();
   if (automergeUrls.includes(window.location.href)) {
-    automergeUrls = automergeUrls.filter(a => a !== window.location.href);
+    automergeUrls = automergeUrls.filter((a) => a !== window.location.href);
   } else {
     automergeUrls.push(window.location.href);
   }
@@ -177,7 +177,7 @@ function toggleAutoMerge() {
 function removeUrlFromLocalStorage() {
   let automergeUrls = getLocalStorageUrls();
   if (automergeUrls.includes(window.location.href)) {
-    automergeUrls = automergeUrls.filter(a => a !== window.location.href);
+    automergeUrls = automergeUrls.filter((a) => a !== window.location.href);
     createMergedNotification();
   }
   saveAutoMergeUrls(automergeUrls);

@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/aqa_select_all
 // @include     *usablenet.com/*
 // @exclude     none
-// @version     1
+// @version     2
 // @description:en	Allows you to select all issues currently visible
 // @grant    		none
 // @description	Allows you to select all issues currently visible
@@ -49,7 +49,7 @@ function addButtonIfNecessary() {
   selectButton.id = SELECT_ALL_BUTTON_ID;
   selectButton.style.border = 'none';
   selectButton.style.backgroundColor = '#0770E3';
-  selectButton.style.borderRadius = '0.25rem';
+  selectButton.style.borderRadius = '0.5rem';
   // eslint-disable-next-line
   selectButton.onclick = onSelectAll;
 
