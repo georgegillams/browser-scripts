@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/aqa_darkmode_background_override
 // @include     *usablenet.com/*
 // @exclude     none
-// @version     1
+// @version     1.0.0
 // @description:en	Ensures that the app under inspections keeps it's white background when using Dark-Reader
 // @grant    		none
 // @description	Ensures that the app under inspections keeps it's white background when using Dark-Reader

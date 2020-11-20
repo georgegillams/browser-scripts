@@ -4,7 +4,7 @@
 // @include     *github.com*
 // @include     *github.skyscannertools.net*
 // @exclude     none
-// @version     9
+// @version     9.0.0
 // @description:en	Adds an reminder to squash PRs that have > 1 commit
 // @grant    		none
 // @description   	Adds an reminder to squash PRs that have > 1 commit

@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/disney_plus_play_pause
 // @include     *disneyplus.com*
 // @exclude     none
-// @version     3
+// @version     3.0.0
 // @description:en	Allows you to play/pause disney plus by pressing `space` on your keyboard
 // @grant    		none
 // @description Allows you to play/pause disney plus by pressing `space` on your keyboard

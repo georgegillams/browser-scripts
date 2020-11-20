@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/countdown_spakles
 // @include     *itsalmo.st*
 // @exclude     none
-// @version     5
+// @version     5.0.0
 // @description:en	Makes your countdown sparkly!
 // @grant    		none
 // @description	Makes your countdown sparkly!

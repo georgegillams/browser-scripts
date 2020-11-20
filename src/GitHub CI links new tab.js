@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/github_ci_new_tab
 // @include     *github.*
 // @exclude     none
-// @version     8
+// @version     8.0.0
 // @description:en	Adds rel=no_opener and taget=blank to github travis links on GitHub
 // @grant    		none
 // @description   	Adds rel=no_opener and taget=blank to github travis links on GitHub

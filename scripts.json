@@ -1,5 +1,10 @@
 [
   {
+    "id": "jira_copy_ticket_id",
+    "fileName": "Copy Jira ticket ID",
+    "greasyforkId": "416336-copy-jira-ticket-id"
+  },
+  {
     "id": "jira_snazzy_columns",
     "fileName": "Jira snazzy columns.js",
     "greasyforkId": "408483-jira-snazzy-columns"

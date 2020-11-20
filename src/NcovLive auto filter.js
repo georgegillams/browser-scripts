@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/ncovlive_auto_filter
 // @include     *ncov2019.live*
 // @exclude     none
-// @version     2
+// @version     2.0.0
 // @description:en	Auto filters for `united kingdom` in the global data
 // @grant    		none
 // @description   	Auto filters for `united kingdom` in the global data

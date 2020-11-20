@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/github_actual_time
 // @include     *github.*
 // @exclude     none
-// @version     1
+// @version     1.0.0
 // @description:en	Adds the actual time next to the relative time on GitHub
 // @grant    		none
 // @description   	Adds the actual time next to the relative time on GitHub

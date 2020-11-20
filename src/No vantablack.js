@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/no_vantablack
 // @include     *
 // @exclude     none
-// @version     2
+// @version     2.0.0
 // @description:en	Replaces all black colours with a nicer gray, because black should never be used. Ever
 // @grant    		none
 // ==/UserScript==

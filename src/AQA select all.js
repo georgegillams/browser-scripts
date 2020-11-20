@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/aqa_select_all
 // @include     *usablenet.com/*
 // @exclude     none
-// @version     2
+// @version     2.0.0
 // @description:en	Allows you to select all issues currently visible
 // @grant    		none
 // @description	Allows you to select all issues currently visible

@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira_hide_legend
 // @include     *gojira.skyscanner.net*
 // @exclude     none
-// @version     2
+// @version     2.0.0
 // @description:en	Hides the pointless legend.
 // @grant    		none
 // @description	Hides the pointless legend.

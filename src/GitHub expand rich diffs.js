@@ -4,7 +4,7 @@
 // @include     *github.com*
 // @include     *github.skyscannertools.net*
 // @exclude     none
-// @version     7
+// @version     7.0.0
 // @description:en	Creates a button which can expand all rich diffs in a PR.
 // @grant    		none
 // @description   	Creates a button which can expand all rich diffs in a PR.

@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/backpack_docs
 // @include     *backpack.github.io*
 // @exclude     none
-// @version     5
+// @version     5.0.0
 // @description:en	Adjusts the layout of backpack docs to make it more laptop-friendly
 // @grant    		none
 // ==/UserScript==

@@ -10,6 +10,7 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 
 |  Name                      |  Code                 |  GreasyFork             |
 | ------------------------ | ------------------- | --------------------- |
+|  jira_copy_ticket_id       |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Copy%20Jira%20ticket%20ID)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/416336-copy-jira-ticket-id)  |
 |  jira_snazzy_columns       |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Jira%20snazzy%20columns.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/408483-jira-snazzy-columns)  |
 |  backpack_docs             |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Backpack%20docs.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/400764-backpack)  |
 |  disney_plus_play_pause    |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Disney%20Plus%20Play%20Pause.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/403470-disney-toggle-play-pause)  |

@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/hackthis_coding_1
 // @include     https://www.hackthis.co.uk/levels/coding/1
 // @exclude     none
-// @version     3
+// @version     3.0.0
 // @description Calculates and fills in the solution to coding level 1 on hackthis.co.uk
 // @description:en Calculates and fills in the solution to coding level 1 on hackthis.co.uk
 // @grant    		none

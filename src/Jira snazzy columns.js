@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira_snazzy_columns
 // @include     *gojira.*
 // @exclude     none
-// @version     2
+// @version     2.0.0
 // @description:en	Makes your jira board headings more snazzy, so that you stop getting them confused.
 // @grant    		none
 // @description	Makes your jira board headings more snazzy, so that you stop getting them confused.

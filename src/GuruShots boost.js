@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/gurushots_boost
 // @include     *gurushots.com/*
 // @exclude     none
-// @version     7
+// @version     7.0.0
 // @description:en	Makes the boost buttons on GuruShots.com stand out more when a free boost is available.
 // @grant    		none
 // ==/UserScript==

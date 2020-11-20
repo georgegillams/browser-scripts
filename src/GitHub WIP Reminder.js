@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/greasemonkey/github_WIP_reminder
 // @include     *github.com*
 // @exclude     none
-// @version     7
+// @version     7.0.0
 // @description:en	Adds an reminder to not review WIP PR's
 // @description	Adds an reminder to not review WIP PR's
 // @grant    		none
