@@ -5,7 +5,7 @@
 // @include     *github.skyscannertools.net*
 // @include     *gojira.skyscanner.net*
 // @exclude     none
-// @version     10.0.0
+// @version     10.0.1
 // @description:en	Creates links from GitHub PRs to their respective Jira ticket and vice-versa
 // @grant    		none
 // @description Creates links from GitHub PRs to their respective Jira ticket and vice-versa
@@ -22,7 +22,7 @@ function makeGHLink() {
       const newElement = document.createElement('a');
       newElement.innerText = `View ${text} ticket on Jira`;
       newElement.href = url;
-      newElement.style.color = '#0770E3';
+      newElement.style.color = 'var(--color-text-link, #0770E3)';
       newElement.style.fontSize = '1rem';
       newElement.id = 'jira_github_links_result';
 
