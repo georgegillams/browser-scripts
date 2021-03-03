@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira_snazzy_columns
 // @include     *gojira.*
 // @exclude     none
-// @version     2.0.0
+// @version     2.1.0
 // @description:en	Makes your jira board headings more snazzy, so that you stop getting them confused.
 // @grant    		none
 // @description	Makes your jira board headings more snazzy, so that you stop getting them confused.
@@ -25,6 +25,24 @@ function insertStyleSheetRule(ruleText) {
   );
 }
 
+function colorForTitle(title) {
+  switch (title) {
+    case 'TO DO':
+      return 'lightcoral';
+      break;
+    case 'IN PROGRESS':
+      return 'aquamarine';
+      break;
+    case 'IN REVIEW':
+      return 'moccasin';
+      break;
+    case 'DONE':
+      return 'cornflowerblue';
+      break;
+  }
+  return 'red';
+}
+
 function snazzTitles() {
   const titleContainerElements = document.getElementsByClassName(
     'ghx-column-header-content',
@@ -38,7 +56,7 @@ function snazzTitles() {
   for (let i = 0; i < titleElements.length; i += 1) {
     const tE = titleElements[i];
     tE.style.color = 'white';
-    tE.style.background = 'red';
+    tE.style.background = colorForTitle(tE.innerText);
     tE.style.padding = '0.1rem 0.4rem';
     tE.style.animation = `spinIt${i % 2} 1s infinite`;
     tE.style.borderRadius = '2rem';
