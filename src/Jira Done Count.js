@@ -3,8 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira_done_count
 // @include     *gojira.*
 // @exclude     none
-// @version     1
-// @description:en	Adds done-count to sprint description.
+// @version     2.0.1
 // @grant    		none
 // @description	Adds done-count to sprint description.
 // ==/UserScript==
@@ -14,7 +13,7 @@ let doneCount = -1;
 function getDoneCount() {
   const columns = document.getElementsByClassName('ghx-column ui-sortable');
   if (columns.length < 1) {
-    return;
+    return 0;
   }
   const doneColumn = columns[columns.length - 1];
   return doneColumn.childNodes.length;
@@ -32,13 +31,12 @@ function updateDoneCount(newValue) {
   const newTextValue = `${currentValue.split(' • ')[0]} • ${doneCount} ticket${
     doneCount === 1 ? '' : 's'
   } done`;
-  console.log(`newTextValue`, newTextValue);
   sprintDescriptionElement.innerHTML = newTextValue;
 }
 
 function updateCount() {
-  const doneCount = getDoneCount();
-  updateDoneCount(doneCount);
+  const newDoneCount = getDoneCount();
+  updateDoneCount(newDoneCount);
 }
 
 function worker() {

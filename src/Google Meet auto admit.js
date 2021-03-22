@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/google_meet_auto_admit
 // @include     *meet.google.com*
 // @exclude     none
-// @version     0.0.1
+// @version     1.0.0
 // @description:en	Automatically admits Google Meet participants
 // @grant    		none
 // @description Automatically admits Google Meet participants
@@ -14,6 +14,7 @@ function admitUserIfWaiting() {
   for (let i = 0; i < divElements.length; i += 1) {
     const div = divElements[i];
     if (div.innerText === 'Admit') {
+      // eslint-disable-next-line no-console
       console.log(`Admitting participant automatically.`);
       div.click();
     }

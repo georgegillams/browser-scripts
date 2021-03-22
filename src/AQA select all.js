@@ -3,8 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/aqa_select_all
 // @include     *usablenet.com/*
 // @exclude     none
-// @version     2.0.0
-// @description:en	Allows you to select all issues currently visible
+// @version     3
 // @grant    		none
 // @description	Allows you to select all issues currently visible
 // ==/UserScript==
@@ -12,8 +11,11 @@
 const SELECT_ALL_BUTTON_ID = 'SELECT_ALL_BUTTON_ID_92hotv782';
 
 function onSelectAll() {
+  document
+    .getElementsByClassName('sc-note--load-more--icon')
+    .forEach(e => e.click());
+
   const categoryElements = document.getElementsByClassName('sc-ruleIssue');
-  console.log(`categoryElements`, categoryElements);
 
   for (let i = 0; i < categoryElements.length; i += 1) {
     const categoryElement = categoryElements[i];

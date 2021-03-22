@@ -17,7 +17,11 @@ function makeGHLink() {
     const element = allElements[i];
     const elementMatch = element.innerText.match(/\[BPKR?-[0-9]+\]/g);
     if (elementMatch && elementMatch.length > 0) {
-      const text = elementMatch[0].split('[').join('').split(']').join('');
+      const text = elementMatch[0]
+        .split('[')
+        .join('')
+        .split(']')
+        .join('');
       const url = `https://gojira.skyscanner.net/browse/${text}`;
       const newElement = document.createElement('a');
       newElement.innerText = `View ${text} ticket on Jira`;

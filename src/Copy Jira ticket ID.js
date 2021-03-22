@@ -4,15 +4,17 @@
 // @include     *github.skyscannertools.net*
 // @include     *gojira.skyscanner.net*
 // @exclude     none
-// @version     1.0.0
+// @version     1.0.1
 // @description:en	Adds a button next to a Jira ticket ID to copy the ID to the clipboard
 // @grant    		none
 // @description Adds a button next to a Jira ticket ID to copy the ID to the clipboard
 // ==/UserScript==
 
 function makeCopyButton(idElement, ticketID) {
+  /* eslint-disable no-param-reassign */
   idElement.style.display = 'flex';
   idElement.style.marginBottom = '0.4rem';
+  /* eslint-enable */
 
   const newElement = document.createElement('button');
   newElement.innerText = '📋';
@@ -20,7 +22,8 @@ function makeCopyButton(idElement, ticketID) {
   newElement.style.borderRadius = '.25rem';
   newElement.style.marginLeft = '.5rem';
   newElement.id = `jira-id-copy-button-${ticketID}`;
-  newElement.onclick = function () {
+  newElement.onclick = () => {
+    // eslint-disable-next-line no-console
     console.log(`ID ${ticketID} copied`);
     navigator.clipboard.writeText(ticketID);
   };
@@ -40,7 +43,7 @@ function makeCopyButtonIfNeeded(idElement) {
   const existingCopyElement = document.getElementById(
     `jira-id-copy-button-${ticketID}`,
   );
-  if (!!existingCopyElement) {
+  if (existingCopyElement) {
     return;
   }
 

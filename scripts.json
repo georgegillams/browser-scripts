@@ -1,5 +1,10 @@
 [
   {
+    "id": "jira_done_count",
+    "fileName": "Jira Done Count",
+    "greasyforkId": "423770-jira-done-count"
+  },
+  {
     "id": "google_meet_auto_admit",
     "fileName": "Google Meet auto admit",
     "greasyforkId": "418194-google-meet-auto-admit"

@@ -166,7 +166,7 @@ function createButtonIfNecessary() {
 function toggleAutoMerge() {
   let automergeUrls = getLocalStorageUrls();
   if (automergeUrls.includes(window.location.href)) {
-    automergeUrls = automergeUrls.filter((a) => a !== window.location.href);
+    automergeUrls = automergeUrls.filter(a => a !== window.location.href);
   } else {
     automergeUrls.push(window.location.href);
   }
@@ -177,7 +177,7 @@ function toggleAutoMerge() {
 function removeUrlFromLocalStorage() {
   let automergeUrls = getLocalStorageUrls();
   if (automergeUrls.includes(window.location.href)) {
-    automergeUrls = automergeUrls.filter((a) => a !== window.location.href);
+    automergeUrls = automergeUrls.filter(a => a !== window.location.href);
     createMergedNotification();
   }
   saveAutoMergeUrls(automergeUrls);
@@ -255,7 +255,6 @@ function reload() {
 }
 
 function worker() {
-  console.log(`worker`);
   try {
     mergeIfReady();
     cleanupLocalStorage();
