@@ -5,8 +5,7 @@
 // @include     *github.skyscannertools.net*
 // @include     *gojira.skyscanner.net*
 // @exclude     none
-// @version     10.0.1
-// @description:en	Creates links from GitHub PRs to their respective Jira ticket and vice-versa
+// @version     10.0.2
 // @grant    		none
 // @description Creates links from GitHub PRs to their respective Jira ticket and vice-versa
 // ==/UserScript==
@@ -15,7 +14,7 @@ function makeGHLink() {
   const allElements = document.getElementsByTagName('H1');
   for (let i = 0; i < allElements.length; i += 1) {
     const element = allElements[i];
-    const elementMatch = element.innerText.match(/\[BPKR?-[0-9]+\]/g);
+    const elementMatch = element.innerText.match(/\[KOA-[0-9]+\]/g);
     if (elementMatch && elementMatch.length > 0) {
       const text = elementMatch[0]
         .split('[')
@@ -39,9 +38,10 @@ function makeGHLink() {
 function makeJiraLink() {
   const allElements = document.getElementsByTagName('LI');
   const viewIssueSidebar = document.getElementById('viewissuesidebar');
+  console.log(`viewIssueSidebar`, viewIssueSidebar);
   for (let i = 0; i < allElements.length; i += 1) {
     const element = allElements[i];
-    const elementMatch = element.innerText.match(/^BPKR?-[0-9]+$/g);
+    const elementMatch = element.innerText.match(/^KOA-[0-9]+$/g);
     if (elementMatch && elementMatch.length > 0) {
       const text = element.innerText;
 
@@ -59,7 +59,7 @@ function makeJiraLink() {
       const newElement2 = document.createElement('a');
       newElement2.innerText = `View PRs for ${text} on GitHub (Internal)`;
       newElement2.href = url2;
-      newElement2.style.color = '#00b2d6ff';
+      newElement2.style.color = '#0770e3';
       newElement2.style.marginLeft = '10px';
       newElement2.id = 'jira_github_links_result';
 

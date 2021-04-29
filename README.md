@@ -10,6 +10,7 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 
 |  Name                      |  Code                 |  GreasyFork             |
 | ------------------------ | ------------------- | --------------------- |
+|  jira_done_count           |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Jira%20Done%20Count)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/423770-jira-done-count)  |
 |  google_meet_auto_admit    |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Google%20Meet%20auto%20admit)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/418194-google-meet-auto-admit)  |
 |  jira_copy_ticket_id       |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Copy%20Jira%20ticket%20ID)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/416336-copy-jira-ticket-id)  |
 |  jira_snazzy_columns       |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Jira%20snazzy%20columns.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/408483-jira-snazzy-columns)  |
