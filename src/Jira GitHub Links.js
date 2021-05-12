@@ -38,7 +38,6 @@ function makeGHLink() {
 function makeJiraLink() {
   const allElements = document.getElementsByTagName('LI');
   const viewIssueSidebar = document.getElementById('viewissuesidebar');
-  console.log(`viewIssueSidebar`, viewIssueSidebar);
   for (let i = 0; i < allElements.length; i += 1) {
     const element = allElements[i];
     const elementMatch = element.innerText.match(/^KOA-[0-9]+$/g);
