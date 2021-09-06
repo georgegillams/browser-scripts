@@ -1,5 +1,10 @@
 [
   {
+    "id": "dependability_form_helper",
+    "fileName": "Dependability form helper",
+    "greasyforkId": "431997-dependability-form-helper"
+  },
+  {
     "id": "jira_done_count",
     "fileName": "Jira Done Count",
     "greasyforkId": "423770-jira-done-count"
