@@ -10,6 +10,7 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 
 |  Name                       |  Code                 |  GreasyFork             |
 | ------------------------- | ------------------- | --------------------- |
+|  jira_expand_collapse_all   |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Jira%20expand%20collapse%20all)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/433839-jira-expand-collapse-all)  |
 |  dependability_form_helper  |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Dependability%20form%20helper)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/431997-dependability-form-helper)  |
 |  jira_done_count            |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Jira%20Done%20Count)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/423770-jira-done-count)  |
 |  google_meet_auto_admit     |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Google%20Meet%20auto%20admit)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/418194-google-meet-auto-admit)  |
