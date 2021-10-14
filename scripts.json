@@ -1,5 +1,10 @@
 [
   {
+    "id": "jira_expand_collapse_all",
+    "fileName": "Jira expand collapse all",
+    "greasyforkId": "433839-jira-expand-collapse-all"
+  },
+  {
     "id": "dependability_form_helper",
     "fileName": "Dependability form helper",
     "greasyforkId": "431997-dependability-form-helper"
