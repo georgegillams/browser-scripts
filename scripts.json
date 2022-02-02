@@ -1,5 +1,10 @@
 [
   {
+    "id": "auto_close_vpn_connection_message",
+    "fileName": "Auto close VPN connection message",
+    "greasyforkId": "439484-auto-close-vpn-connection-message"
+  },
+  {
     "id": "jira_expand_collapse_all",
     "fileName": "Jira expand collapse all",
     "greasyforkId": "433839-jira-expand-collapse-all"

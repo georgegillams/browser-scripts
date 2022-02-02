@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira_expand_collapse_all
 // @include     *jira.*
 // @exclude     none
-// @version     0.0.1
+// @version     0.0.2
 // @description:en	Enables exxpanding/collapsing all sections by alt-clicking
 // @grant    		none
 // @description Enables exxpanding/collapsing all sections by alt-clicking
@@ -33,23 +33,9 @@ function getDivParentElement(element) {
     return result;
 }
 
-let altKeyDown = false;
-
 function addEventListener() {
-    document.addEventListener('keydown', event => {
-        if (event.key === "Alt") {
-            altKeyDown = true;
-        }
-    });
-
-    document.addEventListener('keyup', event => {
-        if (event.key === "Alt") {
-            altKeyDown = false;
-        }
-    });
-
     document.addEventListener('click', (event) => {
-        if (!altKeyDown) {
+        if (!event.altKey) {
             return;
         }
 
