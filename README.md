@@ -10,6 +10,7 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 
 |  Name                               |  Code                 |  GreasyFork             |
 | --------------------------------- | ------------------- | --------------------- |
+|  notion_sidebar_expander            |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Notion%20Sidebar%20Expander)  |  null                   |
 |  auto_close_vpn_connection_message  |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Auto%20close%20VPN%20connection%20message)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/439484-auto-close-vpn-connection-message)  |
 |  jira_expand_collapse_all           |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Jira%20expand%20collapse%20all)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/433839-jira-expand-collapse-all)  |
 |  dependability_form_helper          |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Dependability%20form%20helper)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/431997-dependability-form-helper)  |

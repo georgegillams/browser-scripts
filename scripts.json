@@ -1,5 +1,10 @@
 [
   {
+    "id": "notion_sidebar_expander",
+    "fileName": "Notion Sidebar Expander",
+    "greasyforkId": ""
+  },
+  {
     "id": "auto_close_vpn_connection_message",
     "fileName": "Auto close VPN connection message",
     "greasyforkId": "439484-auto-close-vpn-connection-message"
