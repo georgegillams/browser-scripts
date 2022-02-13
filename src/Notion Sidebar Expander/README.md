@@ -1,6 +1,6 @@
 ## Notion Sidebar Expander
 
-[Get it for Chrome](https://chrome.google.com/webstore/)
+[Get it for Chrome](https://chrome.google.com/webstore/detail/notion-sidebar-expander/bcncpphhpgindiaibcnbhihjkchnanad/preview)
 
 [Get it for Firefox](https://addons.mozilla.org/en-GB/firefox/addon/notion-sidebar-expander/)
 
