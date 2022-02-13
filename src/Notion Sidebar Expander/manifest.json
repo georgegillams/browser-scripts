@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Notion Sidebar Expander",
+  "description": "Expands Notion Sidebar items to reveal the current page",
+  "version": "1.0.3",
+  "content_scripts": [
+    {
+      "matches": ["https://*.notion.so/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": [],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "notion-sidebar-expander@georgegillams.co.uk"
+    }
+  }
+}

@@ -4,6 +4,7 @@
   "description": "A collection of scripts that I use to make websites work harder for me.",
   "main": "none",
   "scripts": {
+    "setup": "ln \"src/Notion Sidebar Expander.js\" \"src/Notion Sidebar Expander/content.js\"",
     "test": "npm run lint",
     "lint": "npm run lint:js",
     "lint:js": "eslint . --ext .js,.jsx",

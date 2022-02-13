@@ -31,3 +31,6 @@ dump.rdb
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# linked files
+src/Notion Sidebar Expander/content.js
