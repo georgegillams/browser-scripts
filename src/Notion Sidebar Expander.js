@@ -32,7 +32,15 @@ const getTopNavItems = async () => {
     if (!topBar) {
       return { conditionMet: false };
     }
-    const items = [...topBar.getElementsByClassName('notion-focusable')];
+    const topBarFirstChild = topBar.children[0];
+    if (!topBarFirstChild) {
+      return { conditionMet: false };
+    }
+    const topBarNavList = topBarFirstChild.children[0];
+    if (!topBarNavList) {
+      return { conditionMet: false };
+    }
+    const items = [...topBarNavList.getElementsByClassName('notion-focusable')];
     if (!items.length) {
       return { conditionMet: false };
     }
@@ -59,16 +67,31 @@ const getTopNavHiddenItems = async () => {
   });
 };
 
+const plainText = (text) => text.replaceAll(/[^a-zA-Z ]/g, '');
+
 const createPagePath = (integrateHiddenItems, items, hiddenItems) => {
-  const part1 = integrateHiddenItems ? items.slice(0, 1) : items;
-  const part3 = items.slice(3, 100);
-  let path = [...part1, ...hiddenItems, ...part3].filter((s) => s.length > 3);
-  if (path[path.length - 1] === 'Share') {
-    path = path.slice(0, path.length - 1);
+  let result = items;
+  if (integrateHiddenItems) {
+    const part1 = items.slice(0, 1);
+    const part3 = items.slice(2, 100);
+    result = [...part1, ...hiddenItems, ...part3];
   }
-  return path;
+  result = result.filter((s) => plainText(s).length > 0);
+  return result;
 };
 
+const getSidebarElements = async (sideBarElement, identifier) =>
+  await waitFor(() => {
+    const sideBarElements = [
+      ...sideBarElement.getElementsByClassName('notion-focusable'),
+    ];
+    const matches = sideBarElements.filter(
+      (element) => element.innerText === identifier,
+    );
+    return matches.length
+      ? { conditionMet: true, output: matches }
+      : { conditionMet: false };
+  });
 async function checkAndExpand() {
   const topNavItems = await getTopNavItems();
   let topNavHiddenItems = [];
@@ -97,36 +120,32 @@ async function checkAndExpand() {
       ? { conditionMet: true, output: sidebar }
       : { conditionMet: false };
   });
-  for (let pathIndex = 0; pathIndex < pagePath.length; pathIndex++) {
+  for (let pathIndex = 0; pathIndex < pagePath.length - 1; pathIndex++) {
     const pathItem = pagePath[pathIndex];
-    const matchingSidebarElement = await waitFor(() => {
-      const sideBarElements = [
-        ...sideBarElement.getElementsByClassName('notion-focusable'),
-      ];
-      const match = sideBarElements.filter(
-        (element) => element.innerText === pathItem,
-      )[0];
-      return match
-        ? { conditionMet: true, output: match }
-        : { conditionMet: false };
-    });
-    if (pathIndex === pagePath.length - 1) {
-      // Hack to prevent entire page moving before tree is fully formed:
-      setTimeout(() => {
-        matchingSidebarElement.scrollIntoView({
-          block: 'center',
-          behavior: 'smooth',
-        });
-      }, 2000);
-    } else {
+    const matchingSidebarElements = await getSidebarElements(
+      sideBarElement,
+      pathItem,
+    );
+    matchingSidebarElements.forEach((matchingSidebarElement) => {
       const toggleButton =
         matchingSidebarElement.children[0].children[0].children[0];
       const svg = toggleButton.children[0];
       if (svg.style.transform === 'rotateZ(90deg)') {
         toggleButton.click();
       }
-    }
+    });
   }
+  // Hack to ensure entire page is fully formed and tree is fully visible before we scroll
+  await pause(2000);
+  const matchingSidebarElements = await getSidebarElements(
+    sideBarElement,
+    pagePath[pagePath.length - 1],
+  );
+  const lastMatch = matchingSidebarElements[matchingSidebarElements.length - 1];
+  lastMatch.scrollIntoView({
+    block: 'center',
+    behavior: 'smooth',
+  });
 }
 
 checkAndExpand();
