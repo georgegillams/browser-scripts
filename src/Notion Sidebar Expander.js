@@ -3,18 +3,22 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/notion_sidebar_expander
 // @include     *notion.so*
 // @exclude     none
-// @version     1.0.1
+// @version     1.0.5
 // @description:en	Reveals the current page in the sidebar
 // @grant    		none
 // @description Reveals the current page in the sidebar
 // @license MIT
 // ==/UserScript==
 
+const MAIN_TREE_NAMES = ['WORKSPACE', 'PRIVATE', 'SHARED'];
+
+const DELAY_BEFORE_SIDEBAR_SCROLL = 2500;
+
 const pause = (duration) =>
   new Promise((res) => setTimeout(() => res(), duration));
 
 const waitFor = async (getterFunction, options = {}, numberOfTries = 0) => {
-  const { wait = 200, maxRetries = 1000 } = options;
+  const { wait = 200, maxRetries = 150 } = options;
   const { conditionMet, output } = getterFunction();
   if (conditionMet) {
     return output;
@@ -49,6 +53,18 @@ const getTopNavItems = async () => {
   return topBarItems;
 };
 
+const isInMainTree = (element) => {
+  const parentElement = element.parentElement;
+  if (!parentElement) {
+    return false;
+  }
+
+  if (MAIN_TREE_NAMES.includes(parentElement.children[0].innerText)) {
+    return true;
+  }
+
+  return isInMainTree(parentElement);
+};
 const getTopNavHiddenItems = async () => {
   return await waitFor(() => {
     const overlayContainer = document.getElementsByClassName(
@@ -81,17 +97,21 @@ const createPagePath = (integrateHiddenItems, items, hiddenItems) => {
 };
 
 const getSidebarElements = async (sideBarElement, identifier) =>
-  await waitFor(() => {
-    const sideBarElements = [
-      ...sideBarElement.getElementsByClassName('notion-focusable'),
-    ];
-    const matches = sideBarElements.filter(
-      (element) => element.innerText === identifier,
-    );
-    return matches.length
-      ? { conditionMet: true, output: matches }
-      : { conditionMet: false };
-  });
+  await waitFor(
+    () => {
+      const sideBarElements = [
+        ...sideBarElement.getElementsByClassName('notion-focusable'),
+      ];
+      const matches = sideBarElements.filter(
+        (element) => element.innerText === identifier,
+      );
+      const matchesInMainTree = matches.filter(isInMainTree);
+      return matchesInMainTree.length
+        ? { conditionMet: true, output: matches }
+        : { conditionMet: false };
+    },
+    { wait: 200, maxRetries: 20 },
+  );
 async function checkAndExpand() {
   const topNavItems = await getTopNavItems();
   let topNavHiddenItems = [];
@@ -120,28 +140,32 @@ async function checkAndExpand() {
       ? { conditionMet: true, output: sidebar }
       : { conditionMet: false };
   });
-  for (let pathIndex = 0; pathIndex < pagePath.length - 1; pathIndex++) {
+  const expansionStartTime = Date.now();
+  let lastMatch = null;
+  for (let pathIndex = 0; pathIndex < pagePath.length; pathIndex++) {
     const pathItem = pagePath[pathIndex];
     const matchingSidebarElements = await getSidebarElements(
       sideBarElement,
       pathItem,
     );
-    matchingSidebarElements.forEach((matchingSidebarElement) => {
-      const toggleButton =
-        matchingSidebarElement.children[0].children[0].children[0];
-      const svg = toggleButton.children[0];
-      if (svg.style.transform === 'rotateZ(90deg)') {
-        toggleButton.click();
-      }
-    });
+    if (matchingSidebarElements) {
+      matchingSidebarElements.forEach((matchingSidebarElement) => {
+        const toggleButton =
+          matchingSidebarElement.children[0].children[0].children[0];
+        const svg = toggleButton.children[0];
+        if (svg.style.transform === 'rotateZ(90deg)') {
+          toggleButton.click();
+        }
+      });
+      lastMatch = matchingSidebarElements[matchingSidebarElements.length - 1];
+    }
   }
+  const expansionEndTime = Date.now();
   // Hack to ensure entire page is fully formed and tree is fully visible before we scroll
-  await pause(2000);
-  const matchingSidebarElements = await getSidebarElements(
-    sideBarElement,
-    pagePath[pagePath.length - 1],
-  );
-  const lastMatch = matchingSidebarElements[matchingSidebarElements.length - 1];
+  const timeElapsed = expansionEndTime - expansionStartTime;
+  if (timeElapsed < DELAY_BEFORE_SIDEBAR_SCROLL) {
+    await pause(DELAY_BEFORE_SIDEBAR_SCROLL - timeElapsed);
+  }
   lastMatch.scrollIntoView({
     block: 'center',
     behavior: 'smooth',
