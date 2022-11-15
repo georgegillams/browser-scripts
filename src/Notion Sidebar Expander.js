@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/notion_sidebar_expander
 // @include     *notion.so*
 // @exclude     none
-// @version     1.0.5
+// @version     1.1.1
 // @description:en	Reveals the current page in the sidebar
 // @grant    		none
 // @description Reveals the current page in the sidebar
@@ -30,8 +30,8 @@ const waitFor = async (getterFunction, options = {}, numberOfTries = 0) => {
   return await waitFor(getterFunction, options, numberOfTries + 1);
 };
 
-const getTopNavItems = async () => {
-  const topBarItems = await waitFor(() => {
+async function getTopBarNavList() {
+  const topBar = await waitFor(() => {
     const topBar = document.getElementsByClassName('notion-topbar')[0];
     if (!topBar) {
       return { conditionMet: false };
@@ -44,6 +44,14 @@ const getTopNavItems = async () => {
     if (!topBarNavList) {
       return { conditionMet: false };
     }
+    return { conditionMet: true, output: topBarNavList };
+  });
+  return topBar;
+}
+
+const getTopNavItems = async () => {
+  const topBarNavList = await getTopBarNavList();
+  const topBarItems = await waitFor(() => {
     const items = [...topBarNavList.getElementsByClassName('notion-focusable')];
     if (!items.length) {
       return { conditionMet: false };
@@ -102,16 +110,37 @@ const getSidebarElements = async (sideBarElement, identifier) =>
       const sideBarElements = [
         ...sideBarElement.getElementsByClassName('notion-focusable'),
       ];
-      const matches = sideBarElements.filter(
-        (element) => element.innerText === identifier,
-      );
-      const matchesInMainTree = matches.filter(isInMainTree);
-      return matchesInMainTree.length
+      const matches = sideBarElements.filter((element) => {
+        return element.innerText === identifier;
+      });
+      // const matchesInMainTree = matches.filter(isInMainTree);
+      return matches.length
         ? { conditionMet: true, output: matches }
         : { conditionMet: false };
     },
     { wait: 200, maxRetries: 20 },
   );
+
+const expandSidebarItem = (sidebarItem) => {
+  const hasToggleButton = sidebarItem.getElementsByTagName('svg').length > 0;
+
+  if (
+    !hasToggleButton &&
+    sidebarItem.parentElement.parentElement.parentElement.parentElement.getBoundingClientRect()
+      .height < 30
+  ) {
+    sidebarItem.click();
+    return;
+  }
+
+  const toggleButton = sidebarItem.children[0].children[0].children[0];
+  const svg = toggleButton.children[0];
+  console.log(`svg.style.transform`, svg.style.transform);
+  if (svg.style.transform === 'rotateZ(-90deg)') {
+    toggleButton.click();
+  }
+};
+
 async function checkAndExpand() {
   const topNavItems = await getTopNavItems();
   let topNavHiddenItems = [];
@@ -150,12 +179,7 @@ async function checkAndExpand() {
     );
     if (matchingSidebarElements) {
       matchingSidebarElements.forEach((matchingSidebarElement) => {
-        const toggleButton =
-          matchingSidebarElement.children[0].children[0].children[0];
-        const svg = toggleButton.children[0];
-        if (svg.style.transform === 'rotateZ(90deg)') {
-          toggleButton.click();
-        }
+        expandSidebarItem(matchingSidebarElement);
       });
       lastMatch = matchingSidebarElements[matchingSidebarElements.length - 1];
     }
@@ -172,4 +196,28 @@ async function checkAndExpand() {
   });
 }
 
+async function addButtonToUI() {
+  if (document.getElementById('sba-expand-tree-button')) {
+    return;
+  }
+
+  const topBarNavList = await getTopBarNavList();
+  const expandTreeButton = document.createElement('button');
+  expandTreeButton.innerHTML = `
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M18.4 16.16H10.4" stroke="#37352f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M18.4 9.60001L7.20001 9.60001" stroke="#37352f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M18.4 3.2L2.39999 3.2" stroke="#37352f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M12.7484 13.6L9.50145 15.7646C9.20458 15.9625 9.20458 16.3988 9.50145 16.5967L12.7484 18.7613" stroke="#37352f" stroke-width="2" stroke-linecap="round"/>
+</svg>
+  `;
+  expandTreeButton.ariaLabel = `Expand sidebar tree to current page`;
+  expandTreeButton.id = 'sba-expand-tree-button';
+  expandTreeButton.style.background = 'none';
+  expandTreeButton.style.border = 'none';
+  expandTreeButton.onclick = checkAndExpand;
+  topBarNavList.insertBefore(expandTreeButton, topBarNavList.children[0]);
+}
+
+addButtonToUI();
 checkAndExpand();
