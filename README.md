@@ -10,6 +10,7 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 
 |  Name                               |  Code                 |  GreasyFork             |
 | --------------------------------- | ------------------- | --------------------- |
+|  codewhisperer-auth                 |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/CodeWhisperer%20auth)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/467716-codewhisperer-auth)  |
 |  notion_sidebar_expander            |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Notion%20Sidebar%20Expander)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/439931-notion-sidebar-expander)  |
 |  auto_close_vpn_connection_message  |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Auto%20close%20VPN%20connection%20message)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/439484-auto-close-vpn-connection-message)  |
 |  jira_expand_collapse_all           |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Jira%20expand%20collapse%20all)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/433839-jira-expand-collapse-all)  |

@@ -1,5 +1,10 @@
 [
   {
+    "id": "codewhisperer-auth",
+    "fileName": "CodeWhisperer auth",
+    "greasyforkId": "467716-codewhisperer-auth"
+  },
+  {
     "id": "notion_sidebar_expander",
     "fileName": "Notion Sidebar Expander",
     "greasyforkId": "439931-notion-sidebar-expander"
