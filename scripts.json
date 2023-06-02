@@ -1,42 +1,42 @@
 [
   {
     "id": "codewhisperer-auth",
-    "fileName": "CodeWhisperer auth",
+    "fileName": "CodeWhisperer auth.js",
     "greasyforkId": "467716-codewhisperer-auth"
   },
   {
     "id": "notion_sidebar_expander",
-    "fileName": "Notion Sidebar Expander",
+    "fileName": "Notion Sidebar Expander.js",
     "greasyforkId": "439931-notion-sidebar-expander"
   },
   {
     "id": "auto_close_vpn_connection_message",
-    "fileName": "Auto close VPN connection message",
+    "fileName": "Auto close VPN connection message.js",
     "greasyforkId": "439484-auto-close-vpn-connection-message"
   },
   {
     "id": "jira_expand_collapse_all",
-    "fileName": "Jira expand collapse all",
+    "fileName": "Jira expand collapse all.js",
     "greasyforkId": "433839-jira-expand-collapse-all"
   },
   {
     "id": "dependability_form_helper",
-    "fileName": "Dependability form helper",
+    "fileName": "Dependability form helper.js",
     "greasyforkId": "431997-dependability-form-helper"
   },
   {
     "id": "jira_done_count",
-    "fileName": "Jira Done Count",
+    "fileName": "Jira Done Count.js",
     "greasyforkId": "423770-jira-done-count"
   },
   {
     "id": "google_meet_auto_admit",
-    "fileName": "Google Meet auto admit",
+    "fileName": "Google Meet auto admit.js",
     "greasyforkId": "418194-google-meet-auto-admit"
   },
   {
     "id": "jira_copy_ticket_id",
-    "fileName": "Copy Jira ticket ID",
+    "fileName": "Copy Jira ticket ID.js",
     "greasyforkId": "416336-copy-jira-ticket-id"
   },
   {
