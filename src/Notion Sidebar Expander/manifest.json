@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Notion Sidebar Expander",
   "description": "Expands Notion Sidebar items to reveal the current page",
-  "version": "1.0.5",
+  "version": "1.1.2",
   "content_scripts": [
     {
       "matches": ["https://*.notion.so/*"],
