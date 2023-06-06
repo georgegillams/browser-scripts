@@ -19,7 +19,7 @@ const pause = (duration) =>
 
 const waitFor = async (getterFunction, options = {}, numberOfTries = 0) => {
   const { wait = 200, maxRetries = 150 } = options;
-  const { conditionMet, output } = getterFunction();
+  const { conditionMet, output } = await getterFunction();
   if (conditionMet) {
     return output;
   }
@@ -45,7 +45,7 @@ const getTopNavItems = async () => {
     if (!topBarNavList) {
       return { conditionMet: false };
     }
-    const items = [...topBarNavList.children].slice(1, 100);
+    const items = [...topBarNavList.children];
     if (!items.length) {
       return { conditionMet: false };
     }
@@ -75,17 +75,27 @@ const isInMainTree = (element) => {
 
   return isInMainTree(parentElement);
 };
+
 const getTopNavHiddenItems = async () => {
-  return await waitFor(() => {
+  return await waitFor(async () => {
     const overlayContainer = document.getElementsByClassName(
       'notion-overlay-container',
     )[0];
     if (!overlayContainer) {
       return { conditionMet: false };
     }
-    const items = [
-      ...overlayContainer.getElementsByClassName('notion-selectable'),
-    ];
+    const list = await waitFor(
+      () => {
+        const l = overlayContainer.getElementsByClassName('notion-scroller')[0];
+        if (l) {
+          return { conditionMet: true, output: l };
+        }
+        return { conditionMet: false };
+      },
+      { wait: 200, maxRetries: 20 },
+    );
+
+    const items = [...list.children[0].children[0].children];
     if (!items.length) {
       return { conditionMet: false };
     }
@@ -98,7 +108,7 @@ const plainText = (text) => text.replaceAll(/[^a-zA-Z ]/g, '');
 const createPagePath = (integrateHiddenItems, items, hiddenItems) => {
   let result = items;
   if (integrateHiddenItems) {
-    const part1 = items.slice(0, 1);
+    const part1 = items.slice(0, 2);
     const part3 = items.slice(2, 100);
     result = [...part1, ...hiddenItems, ...part3];
   }
@@ -122,13 +132,21 @@ const getSidebarElements = async (sideBarElement, identifier) =>
     },
     { wait: 200, maxRetries: 20 },
   );
+
 async function checkAndExpand() {
   const topNavItems = await getTopNavItems();
   let topNavHiddenItems = [];
 
-  const epsilonElement = topNavItems.filter(
+  let epsilonElement = topNavItems.filter(
     (item) => item.innerText === '...',
   )[0];
+  if (!epsilonElement) {
+    const epsilonElementWrapper = topNavItems.filter(
+      (item) => item.innerText === '...\n/',
+    )[0];
+    epsilonElement = epsilonElementWrapper.children[0];
+  }
+
   if (epsilonElement) {
     epsilonElement.click();
     topNavHiddenItems = await getTopNavHiddenItems();
