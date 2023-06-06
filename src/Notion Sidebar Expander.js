@@ -10,7 +10,7 @@
 // @license MIT
 // ==/UserScript==
 
-const MAIN_TREE_NAMES = ['WORKSPACE', 'PRIVATE', 'SHARED'];
+const MAIN_TREE_NAMES_TO_IGNORE = ['Favorites'];
 
 const DELAY_BEFORE_SIDEBAR_SCROLL = 2500;
 
@@ -33,6 +33,7 @@ const waitFor = async (getterFunction, options = {}, numberOfTries = 0) => {
 const getTopNavItems = async () => {
   const topBarItems = await waitFor(() => {
     const topBar = document.getElementsByClassName('notion-topbar')[0];
+
     if (!topBar) {
       return { conditionMet: false };
     }
@@ -44,7 +45,7 @@ const getTopNavItems = async () => {
     if (!topBarNavList) {
       return { conditionMet: false };
     }
-    const items = [...topBarNavList.getElementsByClassName('notion-focusable')];
+    const items = [...topBarNavList.children].slice(1, 100);
     if (!items.length) {
       return { conditionMet: false };
     }
@@ -55,12 +56,21 @@ const getTopNavItems = async () => {
 
 const isInMainTree = (element) => {
   const parentElement = element.parentElement;
+
   if (!parentElement) {
     return false;
   }
 
-  if (MAIN_TREE_NAMES.includes(parentElement.children[0].innerText)) {
-    return true;
+  if (
+    parentElement.classList.contains('notion-outliner-team-header-container')
+  ) {
+    if (
+      MAIN_TREE_NAMES_TO_IGNORE.includes(parentElement.children?.[0]?.innerText)
+    ) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   return isInMainTree(parentElement);
@@ -74,7 +84,7 @@ const getTopNavHiddenItems = async () => {
       return { conditionMet: false };
     }
     const items = [
-      ...overlayContainer.getElementsByClassName('notion-focusable'),
+      ...overlayContainer.getElementsByClassName('notion-selectable'),
     ];
     if (!items.length) {
       return { conditionMet: false };
@@ -100,13 +110,13 @@ const getSidebarElements = async (sideBarElement, identifier) =>
   await waitFor(
     () => {
       const sideBarElements = [
-        ...sideBarElement.getElementsByClassName('notion-focusable'),
+        ...sideBarElement.getElementsByClassName('notion-selectable'),
       ];
       const matches = sideBarElements.filter(
         (element) => element.innerText === identifier,
       );
-      const matchesInMainTree = matches.filter(isInMainTree);
-      return matchesInMainTree.length
+
+      return matches.length
         ? { conditionMet: true, output: matches }
         : { conditionMet: false };
     },
@@ -151,9 +161,10 @@ async function checkAndExpand() {
     if (matchingSidebarElements) {
       matchingSidebarElements.forEach((matchingSidebarElement) => {
         const toggleButton =
-          matchingSidebarElement.children[0].children[0].children[0];
+          matchingSidebarElement.children[0].children[0].children[0]
+            .children[0];
         const svg = toggleButton.children[0];
-        if (svg.style.transform === 'rotateZ(90deg)') {
+        if (svg.style.transform === 'rotateZ(-90deg)') {
           toggleButton.click();
         }
       });
@@ -166,10 +177,14 @@ async function checkAndExpand() {
   if (timeElapsed < DELAY_BEFORE_SIDEBAR_SCROLL) {
     await pause(DELAY_BEFORE_SIDEBAR_SCROLL - timeElapsed);
   }
-  lastMatch.scrollIntoView({
+  lastMatch?.scrollIntoView({
     block: 'center',
     behavior: 'smooth',
   });
 }
 
-checkAndExpand();
+try {
+  checkAndExpand();
+} catch (e) {
+  console.log(`Notion Sidebar Expander ran into a bit of an issue:`, e);
+}
