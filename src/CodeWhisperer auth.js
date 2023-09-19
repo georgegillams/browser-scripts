@@ -4,7 +4,7 @@
 // @include     *device.sso.us-east-1.amazonaws.com*
 // @include     *awsapps.com/start*
 // @exclude     none
-// @version     1.0.0
+// @version     1.1.0
 // @description:en	Auto-selects and pastes (if possible) the CodeWhisperer auth code
 // @grant    		none
 // @description Auto-selects and pastes (if possible) the CodeWhisperer auth code
@@ -43,6 +43,10 @@ function doTask() {
       console.log('Code could not be pasted');
     }
   }
+  const [confirmAndContinueButton] = buttons.filter(
+    (b) => b.innerText === 'Confirm and continue',
+  );
+  confirmAndContinueButton?.click();
   const [nextButton] = buttons.filter((b) => b.innerText === 'Next');
   if (pasted || codeInputElement?.value?.length === 9) {
     nextButton?.click();
