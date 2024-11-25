@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/lrn
 // @include     *lrn.com*
 // @exclude     none
-// @version     0.0.2
+// @version     0.0.3
 // @description:en	Makes LRN training less painful
 // @grant    		none
 // @description Makes LRN training less painful
@@ -24,7 +24,7 @@ const isAnswerRadio = (element) =>
 
 const speedUpVideo = () => {
   const videos = [...document.getElementsByTagName('video')];
-  videos.forEach((video) => (video.playbackRate = 10.0));
+  videos.forEach((video) => (video.playbackRate = 4.0));
 };
 
 const pressPlayVideo = () => {
@@ -74,7 +74,7 @@ const expandSectionsIfAvailable = async () => {
   isWorking = true;
   for (let item of expandableItems) {
     item.click();
-    await pause(600);
+    await pause(800);
   }
   isWorking = false;
 };
