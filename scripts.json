@@ -1,5 +1,10 @@
 [
   {
+    "id": "lrn",
+    "fileName": "LRN.js",
+    "greasyforkId": "518785-lrn"
+  },
+  {
     "id": "codewhisperer-auth",
     "fileName": "CodeWhisperer auth.js",
     "greasyforkId": "467716-codewhisperer-auth"
