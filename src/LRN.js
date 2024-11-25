@@ -3,12 +3,15 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/lrn
 // @include     *lrn.com*
 // @exclude     none
-// @version     0.0.4
+// @version     0.0.5
 // @description:en	Makes LRN training less painful
 // @grant    		none
 // @description Makes LRN training less painful
 // @license MIT
 // ==/UserScript==
+
+const DEBUG = false;
+const ATTEMPT_QUIZZES = false;
 
 let isWorking = false;
 
@@ -19,6 +22,8 @@ const getRandomItem = (arr) => {
 
 const pause = (duration) =>
   new Promise((res) => setTimeout(() => res(), duration));
+
+const debug = DEBUG ? (...args) => console.log('DEBUG:', ...args) : () => null;
 
 const closePopup = () => {
   const closeButton = document.getElementById('POP_CLOSE');
@@ -37,29 +42,36 @@ const isAnswerRadio = (element) =>
 
 const speedUpVideo = () => {
   const videos = [...document.getElementsByTagName('video')];
+  debug('Speeding up videos', videos);
   videos.forEach((video) => (video.playbackRate = 4.0));
 };
 
 const pressPlayVideo = () => {
   const playButton = document.getElementById('VIDEO_PLAY_BUTTON');
+  debug('Play button', playButton);
   if (!playButton) {
     return;
   }
   playButton.click();
+  debug('Pressing play button');
 };
 
 const answerQuestionIfAvailable = () => {
   const scorePieChart = document.getElementById('PIE_TEXT_QUICK_QUIZ_PROGRESS');
-  if (scorePieChart) {
+  if (scorePieChart && !TRY_QUIZZES) {
     // We can't automate this part as we need the answers to be correct!
+    debug('Not attempting quiz');
     return;
   }
 
   const submitButton = document.getElementById('IP_SAQ_SUBMIT_BUTTON');
+  debug('submitButton', submitButton);
   if (!submitButton) {
     return;
   }
+  debug('Attempting question(s)');
   const submitDisabled = submitButton.getAttribute('aria-disabled') === 'true';
+  debug('submitDisabled', submitDisabled);
   if (!submitDisabled) {
     submitButton.click();
   }
@@ -70,6 +82,7 @@ const answerQuestionIfAvailable = () => {
       (isAnswerCheckbox(input) || isAnswerRadio(input)) &&
       input.getAttribute('aria-checked') !== 'true',
   );
+  debug('uncheckedAnswers', uncheckedAnswers);
   if (!uncheckedAnswers.length) {
     return;
   }
@@ -81,11 +94,13 @@ const expandSectionsIfAvailable = async () => {
     ...document.getElementsByClassName('ip-ctr-Btn'),
     ...document.getElementsByClassName('ip-accordion-popupBtn'),
   ];
+  debug('expandableItems', expandableItems);
   if (!expandableItems.length) {
     return;
   }
   isWorking = true;
   for (let item of expandableItems) {
+    debug('Expandable item', item);
     item.click();
     await pause(800);
   }
@@ -94,10 +109,12 @@ const expandSectionsIfAvailable = async () => {
 
 const pressNextIfAvailable = () => {
   const nextButton = document.getElementById('NAV_NEXT');
+  debug('nextButton', nextButton);
   if (!nextButton) {
     return;
   }
   const isDisabled = nextButton.getAttribute('aria-disabled') === 'true';
+  debug('nextButton isDisabled', isDisabled);
   if (isDisabled) {
     return;
   }
