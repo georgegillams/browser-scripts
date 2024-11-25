@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/lrn
 // @include     *lrn.com*
 // @exclude     none
-// @version     0.0.3
+// @version     0.0.4
 // @description:en	Makes LRN training less painful
 // @grant    		none
 // @description Makes LRN training less painful
@@ -12,8 +12,21 @@
 
 let isWorking = false;
 
+const getRandomItem = (arr) => {
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex] ?? arr[0];
+};
+
 const pause = (duration) =>
   new Promise((res) => setTimeout(() => res(), duration));
+
+const closePopup = () => {
+  const closeButton = document.getElementById('POP_CLOSE');
+  if (!closeButton) {
+    return;
+  }
+  closeButton.click();
+};
 
 const isAnswerCheckbox = (element) =>
   element.getAttribute('type') === 'checkbox' &&
@@ -60,7 +73,7 @@ const answerQuestionIfAvailable = () => {
   if (!uncheckedAnswers.length) {
     return;
   }
-  uncheckedAnswers[0].click();
+  getRandomItem(uncheckedAnswers).click();
 };
 
 const expandSectionsIfAvailable = async () => {
@@ -97,6 +110,7 @@ function doActions() {
   answerQuestionIfAvailable();
   pressPlayVideo();
   speedUpVideo();
+  closePopup();
 }
 
 function worker() {
