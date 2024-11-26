@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/lrn
 // @include     *lrn.com*
 // @exclude     none
-// @version     0.0.5
+// @version     0.0.6
 // @description:en	Makes LRN training less painful
 // @grant    		none
 // @description Makes LRN training less painful
@@ -58,13 +58,16 @@ const pressPlayVideo = () => {
 
 const answerQuestionIfAvailable = () => {
   const scorePieChart = document.getElementById('PIE_TEXT_QUICK_QUIZ_PROGRESS');
-  if (scorePieChart && !TRY_QUIZZES) {
+  if (scorePieChart && !ATTEMPT_QUIZZES) {
     // We can't automate this part as we need the answers to be correct!
     debug('Not attempting quiz');
     return;
   }
 
-  const submitButton = document.getElementById('IP_SAQ_SUBMIT_BUTTON');
+  const submitButton =
+    document.getElementById('IP_SAQ_SUBMIT_BUTTON') ||
+    document.getElementById('SUBMIT_BUTTON') ||
+    document.getElementById('RETRY_BUTTON');
   debug('submitButton', submitButton);
   if (!submitButton) {
     return;
