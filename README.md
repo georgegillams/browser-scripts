@@ -10,6 +10,8 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 
 |  Name                               |  Code                 |  GreasyFork             |
 | --------------------------------- | ------------------- | --------------------- |
+|  sainsburys-no-scroll               |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/sainsburys-no-scroll.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/534836-sainsbury-s-no-scroll)  |
+|  lrn                                |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/LRN.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/518785-lrn)  |
 |  codewhisperer-auth                 |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/CodeWhisperer%20auth.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/467716-codewhisperer-auth)  |
 |  notion_sidebar_expander            |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Notion%20Sidebar%20Expander.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/439931-notion-sidebar-expander)  |
 |  auto_close_vpn_connection_message  |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Auto%20close%20VPN%20connection%20message.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/439484-auto-close-vpn-connection-message)  |

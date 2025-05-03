@@ -1,5 +1,10 @@
 [
   {
+    "id": "sainsburys-no-scroll",
+    "fileName": "sainsburys-no-scroll.js",
+    "greasyforkId": "534836-sainsbury-s-no-scroll"
+  },
+  {
     "id": "lrn",
     "fileName": "LRN.js",
     "greasyforkId": "518785-lrn"
