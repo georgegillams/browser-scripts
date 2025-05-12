@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        Sainsbury's no scroll
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/sainsburys-no-scroll
-// @include     https://www.sainsburys.co.uk/gol-ui/SearchResults/*
+// @include     https://www.sainsburys.co.uk/gol-ui/*
 // @exclude     none
-// @version     1.0.0
+// @version     1.0.1
 // @description:en	Prevents the page from scrolling after you add an item to your basket
 // @grant    		none
 // @description	Prevents the page from scrolling after you add an item to your basket
