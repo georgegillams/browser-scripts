@@ -10,6 +10,7 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 
 |  Name                               |  Code                 |  GreasyFork             |
 | --------------------------------- | ------------------- | --------------------- |
+|  dont-mess-with-paste               |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/dont-mess-with-paste.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/540416-don-t-mess-with-paste)  |
 |  sainsburys-no-scroll               |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/sainsburys-no-scroll.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/534836-sainsbury-s-no-scroll)  |
 |  lrn                                |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/LRN.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/518785-lrn)  |
 |  codewhisperer-auth                 |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/CodeWhisperer%20auth.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/467716-codewhisperer-auth)  |
