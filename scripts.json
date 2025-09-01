@@ -1,5 +1,10 @@
 [
   {
+    "id": "sainsburys-gift-card",
+    "fileName": "sainsburys-gift-card.js",
+    "greasyforkId": "548011-copy-sainsburys-giftcards"
+  },
+  {
     "id": "dont-mess-with-paste",
     "fileName": "dont-mess-with-paste.js",
     "greasyforkId": "540416-don-t-mess-with-paste"
