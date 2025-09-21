@@ -1,5 +1,10 @@
 [
   {
+    "id": "jira_copy_ticket_id",
+    "fileName": "Jira copy ticket ID.js",
+    "greasyforkId": "550216-jira-copy-ticket-id"
+  },
+  {
     "id": "sainsburys-gift-card",
     "fileName": "sainsburys-gift-card.js",
     "greasyforkId": "548011-copy-sainsburys-giftcards"

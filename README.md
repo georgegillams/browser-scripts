@@ -10,6 +10,7 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 
 |  Name                               |  Code                 |  GreasyFork             |
 | --------------------------------- | ------------------- | --------------------- |
+|  jira_copy_ticket_id                |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Jira%20copy%20ticket%20ID.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/550216-jira-copy-ticket-id)  |
 |  sainsburys-gift-card               |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/sainsburys-gift-card.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/548011-copy-sainsburys-giftcards)  |
 |  dont-mess-with-paste               |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/dont-mess-with-paste.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/540416-don-t-mess-with-paste)  |
 |  sainsburys-no-scroll               |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/sainsburys-no-scroll.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/534836-sainsbury-s-no-scroll)  |

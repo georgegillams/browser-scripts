@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Copy Sainsburys giftcards
-// @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/sainsburys-gift-card
+// @version      0.0.2
 // @description  Add copy CTAs to easily copy Sainsburys gift card numbers
 // @author       You
 // @include     *vexrewards.com*
