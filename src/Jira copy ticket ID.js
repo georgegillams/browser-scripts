@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Copy Ticket ID
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira_copy_ticket_id
-// @version      0.0.1
+// @version      0.0.2
 // @description  Add copy ID CTA to easily copy Jira ticket IDs and make copy buttons permanently visible
 // @author       You
 // @include      *atlassian.net/browse*
@@ -10,6 +10,57 @@
 // @grant        none
 // @license      MIT
 // ==/UserScript==
+
+function showToast(message) {
+  // Remove any existing toast
+  const existingToast = document.getElementById('jira-copy-toast');
+  if (existingToast) {
+    existingToast.remove();
+  }
+
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.id = 'jira-copy-toast';
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #00875a;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  `;
+
+  // Add toast to page
+  document.body.appendChild(toast);
+
+  // Animate in
+  setTimeout(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(0)';
+  }, 10);
+
+  // Animate out and remove after 3 seconds
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(100px)';
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }, 3000);
+}
 
 function extractTicketId() {
   // Try to get ticket ID from URL first
@@ -68,15 +119,6 @@ function processJiraPage() {
   // First, make existing copy buttons visible
   makeCopyButtonsVisible();
 
-  const ticketId = extractTicketId();
-  if (!ticketId) {
-    console.log('Could not find ticket ID, retrying in 1 second...');
-    setTimeout(processJiraPage, 1000);
-    return;
-  }
-
-  console.log('Found ticket ID:', ticketId);
-
   // Find the copy link button wrapper
   const copyButtonWrapper = document.querySelector(
     '[data-testid="issue.common.component.permalink-button.button.copy-link-button-wrapper"]',
@@ -123,8 +165,17 @@ function processJiraPage() {
     e.preventDefault();
     e.stopPropagation();
 
+    // Extract ticket ID at the time of click to get current page's ticket
+    const ticketId = extractTicketId();
+    if (!ticketId) {
+      console.error('Could not find ticket ID to copy');
+      showToast('Error: Could not find ticket ID');
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(ticketId);
+      showToast(`${ticketId} copied`);
       const originalText = this.textContent;
       this.textContent = 'Copied!';
       this.style.backgroundColor = '#00875a';
@@ -143,6 +194,7 @@ function processJiraPage() {
       document.execCommand('copy');
       document.body.removeChild(textArea);
 
+      showToast(`${ticketId} copied`);
       const originalText = this.textContent;
       this.textContent = 'Copied!';
       this.style.backgroundColor = '#00875a';
