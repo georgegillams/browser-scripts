@@ -3,15 +3,29 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/lrn
 // @include     *lrn.com*
 // @exclude     none
-// @version     0.0.7
+// @version     0.0.11
 // @description:en	Makes LRN training less painful
 // @grant    		none
 // @description Makes LRN training less painful
 // @license MIT
 // ==/UserScript==
 
+/**
+ * USAGE INSTRUCTIONS:
+ *
+ * BEFORE YOU USE THIS: Start the course and do the intro manually. This section determines which sections you have to go through and you don't want the script randomly choosing loads of them!
+ *
+ * Either: Install using the TamperMonkey browser extension
+ * Or: Copy the popup URL to open the course in a normal tab, open dev tools (using menu as they've disabled right-click) and paste the script into the console.
+ *
+ * Sometimes it gets stuck, so if it does just reload (and if using the copy-paste method, re-execute in the console).
+ *
+ * Finally, if you've completed everything but it still needs you to spend more time (it requires you to spend at least 90 mins) there's a new "Slow mode" - toggle this on at the top of the script and re-open any completed section to go through it super slowly!
+ */
+
 const DEBUG = false;
 const ATTEMPT_QUIZZES = true;
+const SLOW_MODE = false;
 
 let isWorking = false;
 
@@ -243,4 +257,4 @@ function worker() {
   }
 }
 
-setInterval(worker, 500);
+setInterval(worker, SLOW_MODE ? 15000 : 500);
