@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Jira Copy Ticket ID
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira_copy_ticket_id
-// @version      0.0.2
+// @version      0.0.3
 // @description  Add copy ID CTA to easily copy Jira ticket IDs and make copy buttons permanently visible
 // @author       You
-// @include      *atlassian.net/browse*
+// @include      *atlassian.net*
 // @exclude      none
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=atlassian.net
 // @grant        none

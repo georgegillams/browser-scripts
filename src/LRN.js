@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/lrn
 // @include     *lrn.com*
 // @exclude     none
-// @version     0.0.6
+// @version     0.0.7
 // @description:en	Makes LRN training less painful
 // @grant    		none
 // @description Makes LRN training less painful
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 const DEBUG = false;
-const ATTEMPT_QUIZZES = false;
+const ATTEMPT_QUIZZES = true;
 
 let isWorking = false;
 
@@ -43,7 +43,70 @@ const isAnswerRadio = (element) =>
 const speedUpVideo = () => {
   const videos = [...document.getElementsByTagName('video')];
   debug('Speeding up videos', videos);
-  videos.forEach((video) => (video.playbackRate = 4.0));
+  videos.forEach((video) => {
+    video.playbackRate = 4.0;
+    if (video?.paused) {
+      video.play();
+    }
+  });
+};
+
+const openHomepageSectionIfAvailable = async () => {
+  const homepageSectionCards =
+    document.getElementsByClassName('ip-tile-card-inner');
+  debug('Homepage sections', homepageSectionCards);
+  if (!homepageSectionCards.length) {
+    return;
+  }
+
+  const unlockedHomepageSectionCards = [...homepageSectionCards].filter(
+    (section) => {
+      return !section.querySelector('.ip-icon-lock');
+    },
+  );
+  debug('unlockedHomepageSectionCards', unlockedHomepageSectionCards);
+  if (!unlockedHomepageSectionCards.length) {
+    return;
+  }
+
+  const incompleteHomepageSectionCards = [
+    ...unlockedHomepageSectionCards,
+  ].filter((section) => {
+    return !section.querySelector('.ip-tile-check');
+  });
+  debug('incompleteHomepageSectionCards', incompleteHomepageSectionCards);
+  if (
+    incompleteHomepageSectionCards.some((section) =>
+      section.innerText.includes('Introduction'),
+    )
+  ) {
+    debug('Introduction section found, skipping');
+    return;
+  }
+  if (!incompleteHomepageSectionCards.length) {
+    return;
+  }
+  debug('Filtered homepage sections', incompleteHomepageSectionCards);
+  await pause(2000);
+  getRandomItem(incompleteHomepageSectionCards).click();
+};
+
+const selectThumnailButtonIfAvailable = () => {
+  // get all elements by class ip-ctr-select-thumbnail-btn
+  // for each, click it
+  const thumbnailButtons = [
+    ...document.getElementsByClassName('ip-ctr-select-thumbnail-btn'),
+  ];
+  debug('thumbnailButtons', thumbnailButtons);
+  if (!thumbnailButtons.length) {
+    return;
+  }
+  isWorking = true;
+  for (let button of thumbnailButtons) {
+    debug('Selecting thumbnail button', button);
+    button.click();
+  }
+  isWorking = false;
 };
 
 const pressPlayVideo = () => {
@@ -54,6 +117,21 @@ const pressPlayVideo = () => {
   }
   playButton.click();
   debug('Pressing play button');
+};
+
+const selectRandomBinaryOption = () => {
+  if (!ATTEMPT_QUIZZES) {
+    return;
+  }
+
+  const radioInputs = [...document.getElementsByTagName('INPUT')].filter(
+    (input) => input.id.startsWith('RADIO-'),
+  );
+  debug('radioInputs', radioInputs);
+  if (!radioInputs.length) {
+    return;
+  }
+  getRandomItem(radioInputs).click();
 };
 
 const answerQuestionIfAvailable = () => {
@@ -94,10 +172,11 @@ const answerQuestionIfAvailable = () => {
 
 const expandSectionsIfAvailable = async () => {
   const expandableItems = [
-    ...document.getElementsByClassName('ip-ctr-Btn'),
+    ...document.getElementsByClassName('ip-ctr-inner-btn'),
     ...document.getElementsByClassName('ip-accordion-popupBtn'),
+    ...document.getElementsByClassName('ctrhotspot-hotspot'),
   ];
-  debug('expandableItems', expandableItems);
+  debug('Expandable items', expandableItems);
   if (!expandableItems.length) {
     return;
   }
@@ -121,13 +200,32 @@ const pressNextIfAvailable = () => {
   if (isDisabled) {
     return;
   }
+  // TODO: Hide video elements? Maybe they're interfering with the next button?
   nextButton.click();
 };
 
+const pressSwitchToTextIfAvailable = () => {
+  const switchButton = document.getElementById('BTN_TEXT_MODE');
+  debug('switchButton', switchButton);
+  if (!switchButton) {
+    return;
+  }
+  const isDisabled = switchButton.getAttribute('aria-disabled') === 'true';
+  debug('switchButton isDisabled', isDisabled);
+  if (isDisabled) {
+    return;
+  }
+  switchButton.click();
+};
+
 function doActions() {
+  openHomepageSectionIfAvailable();
+  pressSwitchToTextIfAvailable();
+  selectThumnailButtonIfAvailable();
   pressNextIfAvailable();
   expandSectionsIfAvailable();
   answerQuestionIfAvailable();
+  selectRandomBinaryOption();
   pressPlayVideo();
   speedUpVideo();
   closePopup();
