@@ -1,5 +1,10 @@
 [
   {
+    "id": "sainsburys-delivery-slot-banner",
+    "fileName": "sainsburys-delivery-slot-banner.js",
+    "greasyforkId": "561427-sainsbury-s-delivery-slot-banner"
+  },
+  {
     "id": "jira_copy_ticket_id",
     "fileName": "Jira copy ticket ID.js",
     "greasyforkId": "550216-jira-copy-ticket-id"
