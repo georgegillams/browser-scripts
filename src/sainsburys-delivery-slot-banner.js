@@ -3,11 +3,13 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/sainsburys-delivery-slot-banner
 // @include     https://www.sainsburys.co.uk/gol-ui/*
 // @exclude     none
-// @version     1.0.0
+// @version     1.0.1
 // @description:en	Shows a banner when not editing a delivery slot
 // @grant    		none
 // @description	Shows a banner when not editing a delivery slot
 // @license MIT
+// @downloadURL https://update.greasyfork.org/scripts/561427/Sainsbury%27s%20delivery%20slot%20banner.user.js
+// @updateURL https://update.greasyfork.org/scripts/561427/Sainsbury%27s%20delivery%20slot%20banner.meta.js
 // ==/UserScript==
 
 const BANNER_ID = 'sainsburys-slot-banner';
@@ -17,9 +19,12 @@ function checkAndUpdateBanner() {
   const deliverySlotElement = document.querySelector(
     '.book-delivery__datetime',
   );
+  const isInCheckout = window.location.toString().includes('checkout');
+  const shouldShowBanner = !deliverySlotElement && !isInCheckout;
+
   const existingBanner = document.getElementById(BANNER_ID);
 
-  if (!deliverySlotElement) {
+  if (shouldShowBanner) {
     // Element not found - show banner if it doesn't exist
     if (!existingBanner) {
       const banner = document.createElement('div');
@@ -58,7 +63,7 @@ function worker() {
     setInterval(checkAndUpdateBanner, CHECK_INTERVAL);
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e);
+    console.log('Error in sainsburys-delivery-slot-banner', e);
   }
 }
 
