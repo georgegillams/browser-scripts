@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Board Person Picker
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira-board-person-picker
-// @version      0.0.1
+// @version      0.0.2
 // @description  Add a spinning wheel to randomly select team members on Jira boards and track selections
 // @author       You
 // @include      *atlassian.net/jira*
@@ -16,10 +16,9 @@ const STORAGE_KEY = 'jira-board-selected-users';
 const WHEEL_SIZE = 600; // diameter in pixels
 const SPIN_DURATION = 2000; // milliseconds
 
-let users = []; // Array of user objects: { id, name, identifier, element }
-let selectedUserIds = []; // Array of user IDs that have been selected
+let users = []; // Array of user objects: { name, identifier }
+let selectedNames = []; // Array of user names that have been selected
 let isSpinning = false;
-let userIdCounter = 0; // Counter for generating unique IDs
 let usersExtracted = false; // Flag to track if users have been extracted
 
 // Format name to remove duplicates (e.g., "George GillamsGeorge Gillams" -> "George Gillams")
@@ -55,39 +54,24 @@ function formatUserName(name) {
   return trimmed;
 }
 
-// Generate unique ID for a user
-function generateUserId() {
-  return `user_${Date.now()}_${++userIdCounter}`;
-}
-
 // Load selected users from localStorage
 function loadSelectedUsers() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      selectedUserIds = JSON.parse(stored);
-      // Handle migration from old format (identifiers) to new format (IDs)
-      if (
-        selectedUserIds.length > 0 &&
-        typeof selectedUserIds[0] === 'string' &&
-        !selectedUserIds[0].startsWith('user_')
-      ) {
-        // Old format - convert identifiers to IDs by matching with users
-        // This will be handled when users are loaded
-        console.log('*** Migrating from old format');
-      }
+      selectedNames = JSON.parse(stored);
     }
   } catch (e) {
     console.error('Failed to load selected users:', e);
-    selectedUserIds = [];
+    selectedNames = [];
   }
-  console.log('*** Already chosen people (IDs):', selectedUserIds);
+  console.log('*** Already chosen people:', selectedNames);
 }
 
 // Save selected users to localStorage
 function saveSelectedUsers() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(selectedUserIds));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(selectedNames));
   } catch (e) {
     console.error('Failed to save selected users:', e);
   }
@@ -177,7 +161,6 @@ async function extractUsers() {
         const identifier = userName.toLowerCase().trim();
         if (!userMap.has(identifier)) {
           userMap.set(identifier, {
-            id: generateUserId(),
             name: userName,
             element: clickableElement,
             identifier: identifier,
@@ -233,7 +216,6 @@ async function extractUsers() {
       const identifier = userName.toLowerCase().trim();
       if (!userMap.has(identifier) && clickableElement) {
         userMap.set(identifier, {
-          id: generateUserId(),
           name: userName,
           element: clickableElement,
           identifier: identifier,
@@ -279,7 +261,6 @@ async function extractUsers() {
         const identifier = userName.toLowerCase().trim();
         if (!userMap.has(identifier)) {
           userMap.set(identifier, {
-            id: generateUserId(),
             name: userName,
             element: menuItem,
             identifier: identifier,
@@ -319,7 +300,6 @@ async function extractUsers() {
           const identifier = userName.toLowerCase().trim();
           if (!userMap.has(identifier)) {
             userMap.set(identifier, {
-              id: generateUserId(),
               name: userName,
               element: label,
               identifier: identifier,
@@ -419,17 +399,32 @@ function createFloatingButtons() {
     }
   });
 
-  chooseButton.addEventListener('click', () => {
-    if (!isSpinning && users.length > 0) {
-      const availableUsers = users.filter(
-        (user) => !selectedUserIds.includes(user.id),
-      );
-      if (availableUsers.length > 0) {
-        showWheel();
-      } else {
-        // All users selected, show message
-        alert('All users have been selected! Click Reset to start over.');
-      }
+  chooseButton.addEventListener('click', async () => {
+    if (isSpinning) return;
+
+    // Load users on first press (or if list is empty)
+    if (users.length === 0) {
+      chooseButton.textContent = 'Loading users…';
+      chooseButton.style.opacity = '0.7';
+      chooseButton.style.cursor = 'wait';
+      await extractUsers();
+      chooseButton.textContent = 'Choose next person';
+      chooseButton.style.opacity = '1';
+      chooseButton.style.cursor = 'pointer';
+    }
+
+    if (users.length === 0) {
+      alert('Could not find any users on this board. Try reloading the page.');
+      return;
+    }
+
+    const availableUsers = users.filter(
+      (user) => !selectedNames.includes(user.name),
+    );
+    if (availableUsers.length > 0) {
+      showWheel();
+    } else {
+      showStandupComplete();
     }
   });
 
@@ -458,9 +453,9 @@ function createFloatingButtons() {
 
   resetButton.addEventListener('click', () => {
     console.log('*** Reset clicked - clearing selections');
-    selectedUserIds = [];
+    selectedNames = [];
     saveSelectedUsers();
-    console.log('*** Already chosen people (after reset):', selectedUserIds);
+    console.log('*** Already chosen people (after reset):', selectedNames);
     if (document.getElementById('jira-person-picker-wheel')) {
       hideWheel();
     }
@@ -473,6 +468,108 @@ function createFloatingButtons() {
   container.appendChild(chooseButton);
   container.appendChild(resetButton);
   document.body.appendChild(container);
+}
+
+// Show "Standup complete" celebration screen with confetti
+function showStandupComplete() {
+  // Remove any existing overlay
+  const existing = document.getElementById('jira-person-picker-wheel');
+  if (existing) existing.remove();
+  const existingCelebration = document.getElementById('jira-person-picker-celebration');
+  if (existingCelebration) existingCelebration.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'jira-person-picker-celebration';
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    cursor: pointer;
+  `;
+
+  const message = document.createElement('div');
+  message.innerHTML = 'Standup complete 🎉';
+  message.style.cssText = `
+    color: white;
+    font-size: 64px;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: jira-picker-pulse 2s ease-in-out infinite;
+    pointer-events: none;
+  `;
+
+  // Add pulse animation
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes jira-picker-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    @keyframes jira-picker-confetti-fall {
+      0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0.7; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  overlay.appendChild(message);
+
+  // Click to dismiss
+  overlay.addEventListener('click', () => {
+    overlay.remove();
+    style.remove();
+  });
+
+  document.body.appendChild(overlay);
+
+  // Spawn confetti
+  const confettiColours = [
+    '#ff5630', '#ffab00', '#36b37e', '#00b8d9', '#6554c0',
+    '#ff991f', '#0052cc', '#e91e63', '#f06292', '#00c7e6',
+    '#43a047', '#ffc400', '#ef5350', '#ab47bc', '#8777d9',
+  ];
+  const CONFETTI_COUNT = 120;
+
+  for (let i = 0; i < CONFETTI_COUNT; i++) {
+    const piece = document.createElement('div');
+    const size = Math.random() * 8 + 6;
+    const left = Math.random() * 100;
+    const delay = Math.random() * 2;
+    const duration = Math.random() * 2 + 2;
+    const colour = confettiColours[Math.floor(Math.random() * confettiColours.length)];
+    const shape = Math.random() > 0.5 ? '50%' : '0';
+
+    piece.style.cssText = `
+      position: fixed;
+      top: -20px;
+      left: ${left}%;
+      width: ${size}px;
+      height: ${size * 1.4}px;
+      background-color: ${colour};
+      border-radius: ${shape};
+      z-index: 20001;
+      pointer-events: none;
+      animation: jira-picker-confetti-fall ${duration}s ease-in ${delay}s forwards;
+      opacity: 0;
+    `;
+
+    // Make confetti visible once animation starts
+    piece.style.opacity = '0';
+    setTimeout(() => {
+      piece.style.opacity = '1';
+    }, delay * 1000);
+
+    overlay.appendChild(piece);
+  }
 }
 
 // Create spinning wheel UI
@@ -518,23 +615,11 @@ function createWheel() {
 
   // Get available users (not yet selected)
   const availableUsers = users.filter(
-    (user) => !selectedUserIds.includes(user.id),
+    (user) => !selectedNames.includes(user.name),
   );
 
   if (availableUsers.length === 0) {
-    // All users selected
-    const message = document.createElement('div');
-    message.textContent =
-      'All users have been selected! Click Reset to start over.';
-    message.style.cssText = `
-      padding: 40px;
-      text-align: center;
-      color: #172b4d;
-      font-size: 16px;
-    `;
-    wheelContainer.appendChild(message);
-    overlay.appendChild(wheelContainer);
-    document.body.appendChild(overlay);
+    showStandupComplete();
     return;
   }
 
@@ -587,7 +672,7 @@ function createWheel() {
     const startRad = ((startDeg - 90) * Math.PI) / 180;
     const endRad = ((endDeg - 90) * Math.PI) / 180;
 
-    const isSelected = selectedUserIds.includes(user.id);
+    const isSelected = selectedNames.includes(user.name);
     const colour = isSelected
       ? '#dfe1e6'
       : WEDGE_COLOURS[index % WEDGE_COLOURS.length];
@@ -716,18 +801,14 @@ function showWheel() {
   createWheel();
 
   const availableUsers = users.filter(
-    (user) => !selectedUserIds.includes(user.id),
+    (user) => !selectedNames.includes(user.name),
   );
 
   console.log(
     '*** Available people (not yet chosen):',
     availableUsers.map((u) => u.name),
   );
-  console.log('*** Already chosen people (IDs):', selectedUserIds);
-  console.log(
-    '*** Already chosen people (names):',
-    users.filter((u) => selectedUserIds.includes(u.id)).map((u) => u.name),
-  );
+  console.log('*** Already chosen people:', selectedNames);
 
   if (availableUsers.length === 0) {
     return;
@@ -827,25 +908,11 @@ function spinWheel(targetIndex) {
 
       // Add to selected users
       const selectedUser = users[targetIndex];
-      console.log(
-        '*** Selection confirmed:',
-        selectedUser.name,
-        '(ID:',
-        selectedUser.id + ')',
-      );
-      if (!selectedUserIds.includes(selectedUser.id)) {
-        selectedUserIds.push(selectedUser.id);
+      console.log('*** Selection confirmed:', selectedUser.name);
+      if (!selectedNames.includes(selectedUser.name)) {
+        selectedNames.push(selectedUser.name);
         saveSelectedUsers();
-        console.log(
-          '*** Updated already chosen people (IDs):',
-          selectedUserIds,
-        );
-        console.log(
-          '*** Updated already chosen people (names):',
-          users
-            .filter((u) => selectedUserIds.includes(u.id))
-            .map((u) => u.name),
-        );
+        console.log('*** Updated already chosen people:', selectedNames);
       }
 
       // Activate filter for selected user
@@ -1033,127 +1100,68 @@ async function toggleUserFilter(userName, shouldBeActive) {
 // Activate filter for selected user (deactivate all others)
 async function activateUserFilter(user) {
   console.log('*** Activating filter for:', user.name);
+  const nameLower = user.name.toLowerCase();
 
-  // Step 1: Deactivate all visible checkboxes that are checked (except the target user)
+  // Step 1: Visible checkboxes — deselect others, select target
   const allCheckboxes = document.querySelectorAll(
     'input[type="checkbox"][aria-label*="Filter assignees by"]',
   );
   for (const cb of allCheckboxes) {
-    if (cb.checked) {
-      const label = cb.getAttribute('aria-label') || '';
-      if (!label.toLowerCase().includes(user.name.toLowerCase())) {
-        console.log('*** Deactivating visible filter:', label);
-        cb.click();
-        await new Promise((resolve) => setTimeout(resolve, 200));
-      }
+    const label = (cb.getAttribute('aria-label') || '').toLowerCase();
+    const isTarget = label.includes(nameLower);
+
+    if (cb.checked && !isTarget) {
+      console.log('*** Deactivating visible filter:', cb.getAttribute('aria-label'));
+      cb.click();
+      await new Promise((resolve) => setTimeout(resolve, 200));
+    } else if (!cb.checked && isTarget) {
+      console.log('*** Activating visible filter:', cb.getAttribute('aria-label'));
+      cb.click();
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
   }
 
-  // Step 2: Open overflow menu and deactivate any checked items there (except target)
+  // Step 2: Overflow menu — open, deselect others, select target, close
   await ensureOverflowOpen();
 
   const overflowItems = document.querySelectorAll(
     'button[role="menuitemcheckbox"], [role="menuitemcheckbox"]',
   );
   for (const item of overflowItems) {
+    const text = formatUserName(item.textContent.trim()).toLowerCase();
+    const isTarget = text.includes(nameLower);
     const isChecked = item.getAttribute('aria-checked') === 'true';
-    if (isChecked) {
-      const text = formatUserName(item.textContent.trim());
-      if (!text.toLowerCase().includes(user.name.toLowerCase())) {
-        console.log('*** Deactivating overflow filter:', text);
-        item.click();
-        await new Promise((resolve) => setTimeout(resolve, 200));
-      }
+
+    if (isChecked && !isTarget) {
+      console.log('*** Deactivating overflow filter:', item.textContent.trim());
+      item.click();
+      await new Promise((resolve) => setTimeout(resolve, 200));
+    } else if (!isChecked && isTarget) {
+      console.log('*** Activating overflow filter:', item.textContent.trim());
+      item.click();
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
   }
 
-  // Step 3: Close overflow menu
-  await ensureOverflowClosed();
-
-  // Step 4: Activate the selected user
-  await toggleUserFilter(user.name, true);
-
-  // Step 5: Ensure overflow is closed when done
   await ensureOverflowClosed();
 }
 
-// Migrate old format (identifiers) to new format (IDs)
-function migrateSelectedUsers() {
-  if (selectedUserIds.length === 0 || users.length === 0) return;
-
-  // Check if we have old format (identifiers instead of IDs)
-  const hasOldFormat = selectedUserIds.some(
-    (id) => typeof id === 'string' && !id.startsWith('user_'),
-  );
-
-  if (hasOldFormat) {
-    console.log(
-      '*** Migrating from old format (identifiers) to new format (IDs)',
-    );
-    const migratedIds = [];
-
-    selectedUserIds.forEach((oldId) => {
-      if (typeof oldId === 'string' && !oldId.startsWith('user_')) {
-        // Old format - find user by identifier
-        const user = users.find((u) => u.identifier === oldId);
-        if (user) {
-          migratedIds.push(user.id);
-        }
-      } else {
-        // Already in new format
-        migratedIds.push(oldId);
-      }
-    });
-
-    selectedUserIds = migratedIds;
-    saveSelectedUsers();
-    console.log('*** Migration complete. Selected IDs:', selectedUserIds);
-  }
-}
-
-// Initialize script — called once after page load
-async function initialize() {
+// Initialize script — just show buttons, users are loaded on first use
+function initialize() {
   console.log('*** Initializing...');
-
   loadSelectedUsers();
-
-  const usersFound = await extractUsers();
-
-  if (usersFound) {
-    migrateSelectedUsers();
-    createFloatingButtons();
-
-    const availableCount = users.filter(
-      (u) => !selectedUserIds.includes(u.id),
-    ).length;
-    console.log(
-      '*** Summary - Total people:',
-      users.length,
-      '| Available:',
-      availableCount,
-      '| Already chosen:',
-      selectedUserIds.length,
-    );
-  } else {
-    console.log('*** No users found. Reload the page to try again.');
-  }
+  createFloatingButtons();
 }
 
-// Wait for page to load, then initialize once after 5 seconds
 function doWork() {
   if (!window.location.href.includes('/boards/')) {
     return;
   }
 
-  const startInit = () => {
-    console.log('*** Waiting 3 seconds for page to load...');
-    setTimeout(initialize, 3000);
-  };
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startInit);
+    document.addEventListener('DOMContentLoaded', initialize);
   } else {
-    startInit();
+    initialize();
   }
 }
 
