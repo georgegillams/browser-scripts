@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Board Person Picker
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/jira-board-person-picker
-// @version      0.0.2
+// @version      0.0.3
 // @description  Add a spinning wheel to randomly select team members on Jira boards and track selections
 // @author       You
 // @include      *atlassian.net/jira*
@@ -19,7 +19,16 @@ const SPIN_DURATION = 2000; // milliseconds
 let users = []; // Array of user objects: { name, identifier }
 let selectedNames = []; // Array of user names that have been selected
 let isSpinning = false;
-let usersExtracted = false; // Flag to track if users have been extracted
+let usersExtracted = false;
+let currentBoardUrl = null;
+
+function getBasePath() {
+  return window.location.pathname;
+}
+
+function isOnBoard() {
+  return window.location.pathname.includes('/boards/');
+}
 
 // Format name to remove duplicates (e.g., "George GillamsGeorge Gillams" -> "George Gillams")
 function formatUserName(name) {
@@ -353,6 +362,21 @@ async function extractUsers() {
 }
 
 // Create floating action buttons
+function updateResetButtonState(btn) {
+  const resetBtn =
+    btn || document.getElementById('jira-person-picker-reset-btn');
+  if (!resetBtn) return;
+  if (selectedNames.length === 0) {
+    resetBtn.disabled = true;
+    resetBtn.style.opacity = '0.4';
+    resetBtn.style.cursor = 'not-allowed';
+  } else {
+    resetBtn.disabled = false;
+    resetBtn.style.opacity = '1';
+    resetBtn.style.cursor = 'pointer';
+  }
+}
+
 function createFloatingButtons() {
   // Check if buttons already exist
   if (document.getElementById('jira-person-picker-buttons')) {
@@ -431,6 +455,7 @@ function createFloatingButtons() {
   const resetButton = document.createElement('button');
   resetButton.textContent = 'Reset';
   resetButton.className = 'jira-person-picker-reset-btn';
+  resetButton.id = 'jira-person-picker-reset-btn';
   resetButton.style.cssText = `
     padding: 12px 20px;
     background-color: #6b778c;
@@ -443,6 +468,7 @@ function createFloatingButtons() {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     transition: background-color 0.2s;
   `;
+  updateResetButtonState(resetButton);
 
   resetButton.addEventListener('mouseenter', function () {
     this.style.backgroundColor = '#5e6c84';
@@ -452,16 +478,14 @@ function createFloatingButtons() {
   });
 
   resetButton.addEventListener('click', () => {
+    if (resetButton.disabled) return;
     console.log('*** Reset clicked - clearing selections');
     selectedNames = [];
     saveSelectedUsers();
+    updateResetButtonState(resetButton);
     console.log('*** Already chosen people (after reset):', selectedNames);
     if (document.getElementById('jira-person-picker-wheel')) {
       hideWheel();
-    }
-    // Refresh the wheel if it's open
-    if (document.getElementById('jira-person-picker-wheel')) {
-      createWheel();
     }
   });
 
@@ -475,7 +499,9 @@ function showStandupComplete() {
   // Remove any existing overlay
   const existing = document.getElementById('jira-person-picker-wheel');
   if (existing) existing.remove();
-  const existingCelebration = document.getElementById('jira-person-picker-celebration');
+  const existingCelebration = document.getElementById(
+    'jira-person-picker-celebration',
+  );
   if (existingCelebration) existingCelebration.remove();
 
   const overlay = document.createElement('div');
@@ -533,9 +559,21 @@ function showStandupComplete() {
 
   // Spawn confetti
   const confettiColours = [
-    '#ff5630', '#ffab00', '#36b37e', '#00b8d9', '#6554c0',
-    '#ff991f', '#0052cc', '#e91e63', '#f06292', '#00c7e6',
-    '#43a047', '#ffc400', '#ef5350', '#ab47bc', '#8777d9',
+    '#ff5630',
+    '#ffab00',
+    '#36b37e',
+    '#00b8d9',
+    '#6554c0',
+    '#ff991f',
+    '#0052cc',
+    '#e91e63',
+    '#f06292',
+    '#00c7e6',
+    '#43a047',
+    '#ffc400',
+    '#ef5350',
+    '#ab47bc',
+    '#8777d9',
   ];
   const CONFETTI_COUNT = 120;
 
@@ -545,7 +583,8 @@ function showStandupComplete() {
     const left = Math.random() * 100;
     const delay = Math.random() * 2;
     const duration = Math.random() * 2 + 2;
-    const colour = confettiColours[Math.floor(Math.random() * confettiColours.length)];
+    const colour =
+      confettiColours[Math.floor(Math.random() * confettiColours.length)];
     const shape = Math.random() > 0.5 ? '50%' : '0';
 
     piece.style.cssText = `
@@ -912,6 +951,7 @@ function spinWheel(targetIndex) {
       if (!selectedNames.includes(selectedUser.name)) {
         selectedNames.push(selectedUser.name);
         saveSelectedUsers();
+        updateResetButtonState();
         console.log('*** Updated already chosen people:', selectedNames);
       }
 
@@ -1111,11 +1151,17 @@ async function activateUserFilter(user) {
     const isTarget = label.includes(nameLower);
 
     if (cb.checked && !isTarget) {
-      console.log('*** Deactivating visible filter:', cb.getAttribute('aria-label'));
+      console.log(
+        '*** Deactivating visible filter:',
+        cb.getAttribute('aria-label'),
+      );
       cb.click();
       await new Promise((resolve) => setTimeout(resolve, 200));
     } else if (!cb.checked && isTarget) {
-      console.log('*** Activating visible filter:', cb.getAttribute('aria-label'));
+      console.log(
+        '*** Activating visible filter:',
+        cb.getAttribute('aria-label'),
+      );
       cb.click();
       await new Promise((resolve) => setTimeout(resolve, 200));
     }
@@ -1146,23 +1192,36 @@ async function activateUserFilter(user) {
   await ensureOverflowClosed();
 }
 
-// Initialize script — just show buttons, users are loaded on first use
+function pollUrl() {
+  const container = document.getElementById('jira-person-picker-buttons');
+  const basePath = getBasePath();
+
+  if (!isOnBoard()) {
+    if (container) container.style.display = 'none';
+    return;
+  }
+
+  if (container) container.style.display = 'flex';
+
+  if (basePath !== currentBoardUrl) {
+    console.log('*** URL changed:', currentBoardUrl, '->', basePath);
+    currentBoardUrl = basePath;
+    users = [];
+    usersExtracted = false;
+  }
+}
+
 function initialize() {
   console.log('*** Initializing...');
   loadSelectedUsers();
   createFloatingButtons();
+  currentBoardUrl = getBasePath();
+  pollUrl();
+  setInterval(pollUrl, 1000);
 }
 
-function doWork() {
-  if (!window.location.href.includes('/boards/')) {
-    return;
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initialize);
-  } else {
-    initialize();
-  }
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initialize);
+} else {
+  initialize();
 }
-
-doWork();
