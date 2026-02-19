@@ -1,5 +1,10 @@
 [
   {
+    "id": "jira_board_person_picker",
+    "fileName": "jira-board-person-picker.js",
+    "greasyforkId": "566741-jira-board-person-picker"
+  },
+  {
     "id": "sainsburys-delivery-slot-banner",
     "fileName": "sainsburys-delivery-slot-banner.js",
     "greasyforkId": "561427-sainsbury-s-delivery-slot-banner"

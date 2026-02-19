@@ -10,6 +10,7 @@ To use them, install [Tamper Monkey](https://www.tampermonkey.net/) and add them
 
 |  Name                               |  Code                 |  GreasyFork             |
 | --------------------------------- | ------------------- | --------------------- |
+|  jira_board_person_picker           |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/jira-board-person-picker.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/566741-jira-board-person-picker)  |
 |  sainsburys-delivery-slot-banner    |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/sainsburys-delivery-slot-banner.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/561427-sainsbury-s-delivery-slot-banner)  |
 |  jira_copy_ticket_id                |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/Jira%20copy%20ticket%20ID.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/550216-jira-copy-ticket-id)  |
 |  sainsburys-gift-card               |  [View code on GitHub](https://github.com/georgegillams/browser-scripts/blob/master/src/sainsburys-gift-card.js)  |  [Install on GreasyFork](https://greasyfork.org/en/scripts/548011-copy-sainsburys-giftcards)  |

@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Copy Sainsburys giftcards
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/sainsburys-gift-card
-// @version      0.0.2
-// @description  Add copy CTAs to easily copy Sainsburys gift card numbers
+// @version      0.0.3
+// @description  Add copy CTA to easily copy Sainsburys gift card number, PIN and amount
 // @author       You
 // @include     *vexrewards.com*
 // @exclude     none
@@ -11,9 +11,15 @@
 // @license MIT
 // ==/UserScript==
 
-function addCopyButton(element, textToCopy, buttonText) {
+function addCopyButton(containerElement, textToCopy, buttonText) {
+  // Check if button already exists
+  if (containerElement.querySelector('button.copy-all-button')) {
+    return;
+  }
+
   // Create copy button
   const copyButton = document.createElement('button');
+  copyButton.className = 'copy-all-button';
   copyButton.textContent = buttonText;
   copyButton.style.cssText = `
             margin-left: 8px;
@@ -67,8 +73,8 @@ function addCopyButton(element, textToCopy, buttonText) {
     }
   });
 
-  // Insert button after the element
-  element.parentNode.insertBefore(copyButton, element.nextSibling);
+  // Insert button in the container
+  containerElement.appendChild(copyButton);
 }
 
 function processCardTable() {
@@ -106,32 +112,46 @@ function processCardTable() {
     return;
   }
 
+  // Extract amount from the page
+  // Look for span with font-size:32pt and color:#ed8b00 (the amount display)
+  const amountSpan = Array.from(document.querySelectorAll('span')).find(
+    (span) => {
+      const style = span.getAttribute('style') || '';
+      return (
+        style.includes('font-size:32pt') && style.includes('color:#ed8b00')
+      );
+    },
+  );
+
+  let amount = '';
+  if (amountSpan) {
+    amount = amountSpan.textContent.trim();
+    // Remove £ symbol
+    amount = amount.replace(/£/g, '');
+    // Remove .00 if it ends with that
+    if (amount.endsWith('.00')) {
+      amount = amount.slice(0, -3);
+    }
+  }
+
   console.log('Found card number:', cardNumber);
   console.log('Found PIN:', pin);
+  console.log('Found amount:', amount);
 
   // Remove first 8 digits from card number for copying
   const cardNumberToCopy =
     cardNumber.length > 8 ? cardNumber.substring(8) : cardNumber;
 
-  // Find the bold elements containing the actual numbers
-  const boldElements = cardTable.querySelectorAll(
-    'span[style*="font-weight: bold"]',
-  );
+  // Format: NUMBER PIN (AMOUNT)
+  const formattedText = `${cardNumberToCopy} ${pin}${
+    amount ? ` (${amount})` : ''
+  }`;
 
-  boldElements.forEach((element, index) => {
-    // Skip if button already exists
-    if (element.nextSibling && element.nextSibling.tagName === 'BUTTON') {
-      return;
-    }
-
-    if (index === 0) {
-      // First bold element is the card number
-      addCopyButton(element, cardNumberToCopy, 'Copy Card');
-    } else if (index === 1) {
-      // Second bold element is the PIN
-      addCopyButton(element, pin, 'Copy PIN');
-    }
-  });
+  // Find the container table cell for Card Number to add the button there
+  const cardNumberCell = cardTable.querySelector('td');
+  if (cardNumberCell) {
+    addCopyButton(cardNumberCell, formattedText, 'Copy details');
+  }
 }
 
 function doWork() {
