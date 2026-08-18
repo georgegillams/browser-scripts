@@ -6,9 +6,8 @@
   "scripts": {
     "setup": "ln -f \"src/Notion Sidebar Expander.js\" \"src/Notion Sidebar Expander/content.js\"",
     "test": "npm run lint",
-    "lint": "npm run lint:js",
-    "lint:js": "eslint . --ext .js,.jsx",
-    "lint:js:fix": "eslint . --ext .js,.jsx --fix",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix && oxfmt",
     "build:readme": "node generate-readme.js"
   },
   "repository": {
@@ -26,7 +25,6 @@
     "@babel/preset-env": "^7.5.5",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
     "babel-plugin-add-module-exports": "^1.0.2",
@@ -41,18 +39,9 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-0": "6.24.1",
-    "eslint": "^6.4.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-config-skyscanner-with-prettier": "^0.8.0",
-    "eslint-import-resolver-webpack": "^0.12.0",
-    "eslint-plugin-flowtype": "^4.3.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.20.6",
-    "eslint-plugin-redux-saga": "^1.1.0",
-    "eslint_d": "^8.0.0",
     "jest-cli": "^24.9.0",
-    "lint-staged": "^10.2.13"
+    "lint-staged": "^10.2.13",
+    "oxfmt": "^0.64.0",
+    "oxlint": "^1.79.0"
   }
 }
