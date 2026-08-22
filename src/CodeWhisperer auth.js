@@ -11,7 +11,7 @@
 // @license MIT
 // ==/UserScript==
 
-function closeTab(targetElement) {
+function  closeTab(targetElement) {
   const existingButton = document.getElementById(
     'script-added-auto-close-button',
   );
