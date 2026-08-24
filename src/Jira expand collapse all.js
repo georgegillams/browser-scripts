@@ -10,53 +10,53 @@
 // ==/UserScript==
 
 function expandAll() {
-    document.getElementsByClassName('js-expander').forEach(element => {
-        if (element.ariaExpanded !== 'true') {
-            element.click();
-        }
-    })
+  document.getElementsByClassName('js-expander').forEach((element) => {
+    if (element.ariaExpanded !== 'true') {
+      element.click();
+    }
+  });
 }
 
 function collapseAll() {
-    document.getElementsByClassName('js-expander').forEach(element => {
-        if (element.ariaExpanded === 'true') {
-            element.click();
-        }
-    })
+  document.getElementsByClassName('js-expander').forEach((element) => {
+    if (element.ariaExpanded === 'true') {
+      element.click();
+    }
+  });
 }
 
 function getDivParentElement(element) {
-    let result = element;
-    while (result.tagName.toLowerCase() !== 'div') {
-        result = result.parentElement;
-    }
-    return result;
+  let result = element;
+  while (result.tagName.toLowerCase() !== 'div') {
+    result = result.parentElement;
+  }
+  return result;
 }
 
 function addEventListener() {
-    document.addEventListener('click', (event) => {
-        if (!event.altKey) {
-            return;
-        }
+  document.addEventListener('click', (event) => {
+    if (!event.altKey) {
+      return;
+    }
 
-        const parentElement = getDivParentElement(event.target);
-        if (parentElement.className.contains('js-expander')) {
-            if (parentElement.ariaExpanded === "true") {
-                expandAll();
-            } else {
-                collapseAll();
-            }
-        }
-    })
+    const parentElement = getDivParentElement(event.target);
+    if (parentElement.className.contains('js-expander')) {
+      if (parentElement.ariaExpanded === 'true') {
+        expandAll();
+      } else {
+        collapseAll();
+      }
+    }
+  });
 }
 
 function worker() {
-    try {
-        addEventListener();
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e);
-    }
+  try {
+    addEventListener();
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
 }
 
 worker();

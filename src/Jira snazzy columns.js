@@ -19,10 +19,7 @@ function insertStyleSheetRule(ruleText) {
   }
 
   const sheet = sheets[sheets.length - 1];
-  sheet.insertRule(
-    ruleText,
-    sheet.rules ? sheet.rules.length : sheet.cssRules.length,
-  );
+  sheet.insertRule(ruleText, sheet.rules ? sheet.rules.length : sheet.cssRules.length);
 }
 
 function colorForTitle(title) {
@@ -41,9 +38,7 @@ function colorForTitle(title) {
 }
 
 function snazzTitles() {
-  const titleContainerElements = document.getElementsByClassName(
-    'ghx-column-header-content',
-  );
+  const titleContainerElements = document.getElementsByClassName('ghx-column-header-content');
   for (let i = 0; i < titleContainerElements.length; i += 1) {
     const tCE = titleContainerElements[i];
     tCE.style.overflow = 'initial';

@@ -25,10 +25,7 @@ function hideLegend() {
     const tableElement = tableElements[i];
 
     const tableElementText = tableElement.innerText;
-    if (
-      tableElementText.includes('Completed') &&
-      tableElementText.includes('Commitment')
-    ) {
+    if (tableElementText.includes('Completed') && tableElementText.includes('Commitment')) {
       tableElement.style.display = 'none';
       tableGone = true;
       break;

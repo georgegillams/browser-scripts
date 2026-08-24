@@ -114,14 +114,10 @@ function processCardTable() {
 
   // Extract amount from the page
   // Look for span with font-size:32pt and color:#ed8b00 (the amount display)
-  const amountSpan = Array.from(document.querySelectorAll('span')).find(
-    (span) => {
-      const style = span.getAttribute('style') || '';
-      return (
-        style.includes('font-size:32pt') && style.includes('color:#ed8b00')
-      );
-    },
-  );
+  const amountSpan = Array.from(document.querySelectorAll('span')).find((span) => {
+    const style = span.getAttribute('style') || '';
+    return style.includes('font-size:32pt') && style.includes('color:#ed8b00');
+  });
 
   let amount = '';
   if (amountSpan) {
@@ -139,13 +135,10 @@ function processCardTable() {
   console.log('Found amount:', amount);
 
   // Remove first 8 digits from card number for copying
-  const cardNumberToCopy =
-    cardNumber.length > 8 ? cardNumber.substring(8) : cardNumber;
+  const cardNumberToCopy = cardNumber.length > 8 ? cardNumber.substring(8) : cardNumber;
 
   // Format: NUMBER PIN (AMOUNT)
-  const formattedText = `${cardNumberToCopy} ${pin}${
-    amount ? ` (${amount})` : ''
-  }`;
+  const formattedText = `${cardNumberToCopy} ${pin}${amount ? ` (${amount})` : ''}`;
 
   // Find the container table cell for Card Number to add the button there
   const cardNumberCell = cardTable.querySelector('td');

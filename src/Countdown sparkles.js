@@ -21,9 +21,7 @@ function changeColor() {
   const g = Math.floor(Math.random() * 255);
   const b = Math.floor(Math.random() * 255);
 
-  const backgroundElements = document.getElementsByClassName(
-    'countdown-display',
-  );
+  const backgroundElements = document.getElementsByClassName('countdown-display');
 
   if (backgroundElements.length > 0) {
     const background = backgroundElements[0];

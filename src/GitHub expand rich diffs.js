@@ -11,9 +11,7 @@
 // ==/UserScript==
 
 function expandAllRichDiffs() {
-  const toClick = document.querySelectorAll(
-    `[aria-label="Display the rich diff"]`,
-  );
+  const toClick = document.querySelectorAll(`[aria-label="Display the rich diff"]`);
   for (let i = toClick.length - 1; i >= 0; i -= 1) {
     toClick[i].click();
   }

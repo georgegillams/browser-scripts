@@ -14,8 +14,7 @@ const MAIN_TREE_NAMES_TO_IGNORE = ['Favorites'];
 
 const DELAY_BEFORE_SIDEBAR_SCROLL = 2500;
 
-const pause = (duration) =>
-  new Promise((res) => setTimeout(() => res(), duration));
+const pause = (duration) => new Promise((res) => setTimeout(() => res(), duration));
 
 const waitFor = async (getterFunction, options = {}, numberOfTries = 0) => {
   const { wait = 200, maxRetries = 150 } = options;
@@ -68,12 +67,8 @@ const isInMainTree = (element) => {
     return false;
   }
 
-  if (
-    parentElement.classList.contains('notion-outliner-team-header-container')
-  ) {
-    if (
-      MAIN_TREE_NAMES_TO_IGNORE.includes(parentElement.children?.[0]?.innerText)
-    ) {
+  if (parentElement.classList.contains('notion-outliner-team-header-container')) {
+    if (MAIN_TREE_NAMES_TO_IGNORE.includes(parentElement.children?.[0]?.innerText)) {
       return false;
     } else {
       return true;
@@ -85,9 +80,7 @@ const isInMainTree = (element) => {
 
 const getTopNavHiddenItems = async () => {
   return await waitFor(async () => {
-    const overlayContainer = document.getElementsByClassName(
-      'notion-overlay-container',
-    )[0];
+    const overlayContainer = document.getElementsByClassName('notion-overlay-container')[0];
     if (!overlayContainer) {
       return { conditionMet: false };
     }
@@ -126,16 +119,10 @@ const createPagePath = (integrateHiddenItems, items, hiddenItems) => {
 const getSidebarElements = async (sideBarElement, identifier) =>
   await waitFor(
     () => {
-      const sideBarElements = [
-        ...sideBarElement.getElementsByClassName('notion-selectable'),
-      ];
-      const matches = sideBarElements.filter(
-        (element) => element.innerText === identifier,
-      );
+      const sideBarElements = [...sideBarElement.getElementsByClassName('notion-selectable')];
+      const matches = sideBarElements.filter((element) => element.innerText === identifier);
 
-      return matches.length
-        ? { conditionMet: true, output: matches }
-        : { conditionMet: false };
+      return matches.length ? { conditionMet: true, output: matches } : { conditionMet: false };
     },
     { wait: 200, maxRetries: 20 },
   );
@@ -144,13 +131,9 @@ async function checkAndExpand() {
   const topNavItems = await getTopNavItems();
   let topNavHiddenItems = [];
 
-  let epsilonElement = topNavItems.filter(
-    (item) => item.innerText === '...',
-  )[0];
+  let epsilonElement = topNavItems.filter((item) => item.innerText === '...')[0];
   if (!epsilonElement) {
-    const epsilonElementWrapper = topNavItems.filter(
-      (item) => item.innerText === '...\n/',
-    )[0];
+    const epsilonElementWrapper = topNavItems.filter((item) => item.innerText === '...\n/')[0];
     epsilonElement = epsilonElementWrapper.children[0];
   }
 
@@ -171,23 +154,16 @@ async function checkAndExpand() {
 
   const sideBarElement = await waitFor(() => {
     const sidebar = document.getElementsByClassName('notion-sidebar')[0];
-    return sidebar
-      ? { conditionMet: true, output: sidebar }
-      : { conditionMet: false };
+    return sidebar ? { conditionMet: true, output: sidebar } : { conditionMet: false };
   });
   const expansionStartTime = Date.now();
   let lastMatch = null;
   for (let pathIndex = 0; pathIndex < pagePath.length; pathIndex++) {
     const pathItem = pagePath[pathIndex];
-    const matchingSidebarElements = await getSidebarElements(
-      sideBarElement,
-      pathItem,
-    );
+    const matchingSidebarElements = await getSidebarElements(sideBarElement, pathItem);
     if (matchingSidebarElements) {
       matchingSidebarElements.forEach((matchingSidebarElement) => {
-        const toggleButton =
-          matchingSidebarElement.children[0].children[0].children[0]
-            .children[0];
+        const toggleButton = matchingSidebarElement.children[0].children[0].children[0].children[0];
         const svg = toggleButton.children[0];
         if (svg.style.transform === 'rotateZ(-90deg)') {
           toggleButton.click();

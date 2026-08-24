@@ -18,11 +18,7 @@ function addReminder() {
     for (let i = 0; i < allElements.length; i += 1) {
       const element = allElements[i];
       if (element.innerText.includes('WIP')) {
-        if (
-          element.parentElement.parentElement.className.includes(
-            'labels css-truncate',
-          )
-        ) {
+        if (element.parentElement.parentElement.className.includes('labels css-truncate')) {
           const newElement = document.createElement('div');
           newElement.innerText = `HEY THIS IS WIP!`;
           newElement.style.backgroundColor = '#d1435b';

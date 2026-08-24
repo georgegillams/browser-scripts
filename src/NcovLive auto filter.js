@@ -12,8 +12,8 @@
 let searchDone = false;
 
 function setFilter() {
-  const inputField = document.getElementById('sortable_table_Global_filter')
-    .children[0].children[0];
+  const inputField = document.getElementById('sortable_table_Global_filter').children[0]
+    .children[0];
   if (inputField && !searchDone) {
     inputField.value = 'united kingdom';
 

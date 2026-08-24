@@ -30,17 +30,13 @@ function makeCopyButton(idElement, ticketID) {
 }
 
 function makeCopyButtonIfNeeded(idElement) {
-  const idElementSubElements = idElement.getElementsByClassName(
-    'ghx-issue-key-link',
-  );
+  const idElementSubElements = idElement.getElementsByClassName('ghx-issue-key-link');
   if (idElementSubElements.length < 1) {
     return;
   }
 
   const ticketID = idElementSubElements[0].innerText;
-  const existingCopyElement = document.getElementById(
-    `jira-id-copy-button-${ticketID}`,
-  );
+  const existingCopyElement = document.getElementById(`jira-id-copy-button-${ticketID}`);
   if (!!existingCopyElement) {
     return;
   }

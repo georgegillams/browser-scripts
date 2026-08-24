@@ -14,9 +14,7 @@ let testCount = 0;
 
 function getLocalStorageUrls() {
   const automergeUrlsString = window.localStorage.getItem('AUTOMERGE_URLS');
-  const automergeUrls = automergeUrlsString
-    ? JSON.parse(automergeUrlsString)
-    : [];
+  const automergeUrls = automergeUrlsString ? JSON.parse(automergeUrlsString) : [];
   return automergeUrls;
 }
 
@@ -78,10 +76,7 @@ function createNotificationIfNecessary() {
 
 function saveAutoMergeUrls(automergeUrls, retry = false) {
   try {
-    window.localStorage.setItem(
-      'AUTOMERGE_URLS',
-      JSON.stringify(automergeUrls),
-    );
+    window.localStorage.setItem('AUTOMERGE_URLS', JSON.stringify(automergeUrls));
   } catch (e) {
     if (retry) {
       // eslint-disable-next-line no-alert
@@ -90,9 +85,7 @@ function saveAutoMergeUrls(automergeUrls, retry = false) {
       );
     } else {
       // eslint-disable-next-line no-console
-      console.log(
-        'clearing jump_to:page_views from local storage and retrying...',
-      );
+      console.log('clearing jump_to:page_views from local storage and retrying...');
       window.localStorage.setItem('jump_to:page_views', '');
       saveAutoMergeUrls(automergeUrls, true);
     }
@@ -166,7 +159,7 @@ function createButtonIfNecessary() {
 function toggleAutoMerge() {
   let automergeUrls = getLocalStorageUrls();
   if (automergeUrls.includes(window.location.href)) {
-    automergeUrls = automergeUrls.filter(a => a !== window.location.href);
+    automergeUrls = automergeUrls.filter((a) => a !== window.location.href);
   } else {
     automergeUrls.push(window.location.href);
   }
@@ -177,7 +170,7 @@ function toggleAutoMerge() {
 function removeUrlFromLocalStorage() {
   let automergeUrls = getLocalStorageUrls();
   if (automergeUrls.includes(window.location.href)) {
-    automergeUrls = automergeUrls.filter(a => a !== window.location.href);
+    automergeUrls = automergeUrls.filter((a) => a !== window.location.href);
     createMergedNotification();
   }
   saveAutoMergeUrls(automergeUrls);
@@ -195,11 +188,7 @@ function mergeIfReady() {
   allElements = document.getElementsByTagName('BUTTON');
   for (let i = 0; i < allElements.length; i += 1) {
     const element = allElements[i];
-    if (
-      element.textContent &&
-      !element.disabled &&
-      element.innerText === 'Delete branch'
-    ) {
+    if (element.textContent && !element.disabled && element.innerText === 'Delete branch') {
       element.click();
       return;
     }
@@ -211,8 +200,7 @@ function mergeIfReady() {
     if (
       element.textContent &&
       !element.disabled &&
-      (element.innerText === 'Confirm merge' ||
-        element.innerText === 'Confirm squash and merge')
+      (element.innerText === 'Confirm merge' || element.innerText === 'Confirm squash and merge')
     ) {
       element.click();
       return;

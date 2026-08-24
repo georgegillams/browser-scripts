@@ -13,11 +13,7 @@ function addTimes() {
   const allElements = document.getElementsByTagName('RELATIVE-TIME');
   for (let i = 0; i < allElements.length; i += 1) {
     const element = allElements[i];
-    if (
-      element.innerHTML &&
-      element.innerHTML.includes &&
-      !element.innerHTML.includes(' - ')
-    ) {
+    if (element.innerHTML && element.innerHTML.includes && !element.innerHTML.includes(' - ')) {
       element.innerHTML += ` - ${element.title}`;
     }
   }

@@ -12,8 +12,7 @@
 
 function worker() {
   try {
-    Element.prototype.scrollIntoView = () =>
-      console.log('scrollIntoView is disabled');
+    Element.prototype.scrollIntoView = () => console.log('scrollIntoView is disabled');
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);
