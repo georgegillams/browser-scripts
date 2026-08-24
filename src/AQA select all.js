@@ -11,9 +11,7 @@
 const SELECT_ALL_BUTTON_ID = 'SELECT_ALL_BUTTON_ID_92hotv782';
 
 function expandAllCategories() {
-  document
-    .getElementsByClassName('sc-note--load-more--icon')
-    .forEach(e => e.click());
+  document.getElementsByClassName('sc-note--load-more--icon').forEach((e) => e.click());
 }
 
 function onSelectAll() {
@@ -39,9 +37,7 @@ function addButtonIfNecessary() {
     return;
   }
 
-  const manualReviewControlPanels = document.getElementsByClassName(
-    'manual-review-filters',
-  );
+  const manualReviewControlPanels = document.getElementsByClassName('manual-review-filters');
   if (!manualReviewControlPanels || manualReviewControlPanels.length < 1) {
     return;
   }

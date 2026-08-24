@@ -11,9 +11,7 @@
 const SQUAD_NAME = 'Koala';
 
 function selectSquadIfNecessary() {
-  const selectElement = document.getElementsByClassName(
-    'select-placeholder',
-  )[0];
+  const selectElement = document.getElementsByClassName('select-placeholder')[0];
   if (selectElement.innerText.includes(SQUAD_NAME)) {
     return;
   }

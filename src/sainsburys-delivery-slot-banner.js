@@ -37,13 +37,10 @@ function injectFlashAnimation() {
 }
 
 function checkAndUpdateBanner() {
-  const deliverySlotElement = document.querySelector(
-    '.book-delivery__datetime',
-  );
+  const deliverySlotElement = document.querySelector('.book-delivery__datetime');
   const isInCheckout = window.location.toString().includes('checkout');
   const isInSlotBooking = window.location.toString().includes('slot/book');
-  const shouldShowBanner =
-    !deliverySlotElement && !isInCheckout && !isInSlotBooking;
+  const shouldShowBanner = !deliverySlotElement && !isInCheckout && !isInSlotBooking;
 
   const existingBanner = document.getElementById(BANNER_ID);
 

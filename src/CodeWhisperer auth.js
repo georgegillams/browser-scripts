@@ -11,10 +11,8 @@
 // @license MIT
 // ==/UserScript==
 
-function  closeTab(targetElement) {
-  const existingButton = document.getElementById(
-    'script-added-auto-close-button',
-  );
+function closeTab(targetElement) {
+  const existingButton = document.getElementById('script-added-auto-close-button');
   if (existingButton) {
     existingButton.click();
     return;
@@ -43,9 +41,7 @@ function doTask() {
       console.log('Code could not be pasted');
     }
   }
-  const [confirmAndContinueButton] = buttons.filter(
-    (b) => b.innerText === 'Confirm and continue',
-  );
+  const [confirmAndContinueButton] = buttons.filter((b) => b.innerText === 'Confirm and continue');
   confirmAndContinueButton?.click();
   const [nextButton] = buttons.filter((b) => b.innerText === 'Next');
   if (pasted || codeInputElement?.value?.length === 9) {

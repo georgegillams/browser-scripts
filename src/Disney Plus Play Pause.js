@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 function addListener() {
-  document.addEventListener('keypress', event => {
+  document.addEventListener('keypress', (event) => {
     if (event.keyCode === 32) {
       document.getElementsByClassName('btm-media-client-element')[0].click();
     }

@@ -149,9 +149,7 @@ async function extractUsers() {
 
   // Strategy 1: Look for checkboxes with aria-label="Filter assignees by [Name]"
   const assigneeCheckboxes = Array.from(
-    document.querySelectorAll(
-      'input[type="checkbox"][aria-label*="Filter assignees by"]',
-    ),
+    document.querySelectorAll('input[type="checkbox"][aria-label*="Filter assignees by"]'),
   );
 
   console.log('*** Found', assigneeCheckboxes.length, 'assignee checkboxes');
@@ -180,9 +178,7 @@ async function extractUsers() {
   });
 
   // Strategy 2: Look for hidden label spans with data-testid containing "avatar--label"
-  const avatarLabels = Array.from(
-    document.querySelectorAll('span[data-testid*="avatar--label"]'),
-  );
+  const avatarLabels = Array.from(document.querySelectorAll('span[data-testid*="avatar--label"]'));
 
   console.log('*** Found', avatarLabels.length, 'avatar label spans');
   avatarLabels.forEach((labelSpan) => {
@@ -235,9 +231,7 @@ async function extractUsers() {
 
   // Strategy 3: Look for overflow menu items (buttons with role="menuitemcheckbox")
   const overflowMenuItems = Array.from(
-    document.querySelectorAll(
-      'button[role="menuitemcheckbox"], [role="menuitemcheckbox"]',
-    ),
+    document.querySelectorAll('button[role="menuitemcheckbox"], [role="menuitemcheckbox"]'),
   );
 
   console.log('*** Found', overflowMenuItems.length, 'overflow menu items');
@@ -261,12 +255,7 @@ async function extractUsers() {
     if (nameDiv) {
       let userName = nameDiv.textContent.trim();
       userName = formatUserName(userName); // Fix duplicates
-      if (
-        userName &&
-        userName.length > 0 &&
-        userName.length < 50 &&
-        /[a-zA-Z]/.test(userName)
-      ) {
+      if (userName && userName.length > 0 && userName.length < 50 && /[a-zA-Z]/.test(userName)) {
         const identifier = userName.toLowerCase().trim();
         if (!userMap.has(identifier)) {
           userMap.set(identifier, {
@@ -297,8 +286,7 @@ async function extractUsers() {
     }
 
     // Try to find name from label or nearby elements
-    const label =
-      input.closest('label') || document.querySelector(`label[for="${id}"]`);
+    const label = input.closest('label') || document.querySelector(`label[for="${id}"]`);
     if (label) {
       // Look for hidden span with name
       const nameSpan = label.querySelector('span[hidden], span[id][hidden]');
@@ -323,9 +311,7 @@ async function extractUsers() {
   userMap.delete('unassigned');
 
   // Convert map to array and sort by name for consistency
-  users = Array.from(userMap.values()).sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
+  users = Array.from(userMap.values()).sort((a, b) => a.name.localeCompare(b.name));
 
   console.log(
     '*** Available people:',
@@ -363,8 +349,7 @@ async function extractUsers() {
 
 // Create floating action buttons
 function updateResetButtonState(btn) {
-  const resetBtn =
-    btn || document.getElementById('jira-person-picker-reset-btn');
+  const resetBtn = btn || document.getElementById('jira-person-picker-reset-btn');
   if (!resetBtn) return;
   if (selectedNames.length === 0) {
     resetBtn.disabled = true;
@@ -442,9 +427,7 @@ function createFloatingButtons() {
       return;
     }
 
-    const availableUsers = users.filter(
-      (user) => !selectedNames.includes(user.name),
-    );
+    const availableUsers = users.filter((user) => !selectedNames.includes(user.name));
     if (availableUsers.length > 0) {
       showWheel();
     } else {
@@ -499,9 +482,7 @@ function showStandupComplete() {
   // Remove any existing overlay
   const existing = document.getElementById('jira-person-picker-wheel');
   if (existing) existing.remove();
-  const existingCelebration = document.getElementById(
-    'jira-person-picker-celebration',
-  );
+  const existingCelebration = document.getElementById('jira-person-picker-celebration');
   if (existingCelebration) existingCelebration.remove();
 
   const overlay = document.createElement('div');
@@ -583,8 +564,7 @@ function showStandupComplete() {
     const left = Math.random() * 100;
     const delay = Math.random() * 2;
     const duration = Math.random() * 2 + 2;
-    const colour =
-      confettiColours[Math.floor(Math.random() * confettiColours.length)];
+    const colour = confettiColours[Math.floor(Math.random() * confettiColours.length)];
     const shape = Math.random() > 0.5 ? '50%' : '0';
 
     piece.style.cssText = `
@@ -653,9 +633,7 @@ function createWheel() {
   `;
 
   // Get available users (not yet selected)
-  const availableUsers = users.filter(
-    (user) => !selectedNames.includes(user.name),
-  );
+  const availableUsers = users.filter((user) => !selectedNames.includes(user.name));
 
   if (availableUsers.length === 0) {
     showStandupComplete();
@@ -712,9 +690,7 @@ function createWheel() {
     const endRad = ((endDeg - 90) * Math.PI) / 180;
 
     const isSelected = selectedNames.includes(user.name);
-    const colour = isSelected
-      ? '#dfe1e6'
-      : WEDGE_COLOURS[index % WEDGE_COLOURS.length];
+    const colour = isSelected ? '#dfe1e6' : WEDGE_COLOURS[index % WEDGE_COLOURS.length];
     const textColour = 'white';
     const textOpacity = isSelected ? '0.5' : '1';
 
@@ -763,8 +739,7 @@ function createWheel() {
     );
     text.setAttribute('transform', `rotate(${textRotDeg}, ${textX}, ${textY})`);
 
-    const displayName =
-      user.name.length > 14 ? user.name.substring(0, 12) + '…' : user.name;
+    const displayName = user.name.length > 14 ? user.name.substring(0, 12) + '…' : user.name;
     text.textContent = displayName;
     svg.appendChild(text);
   });
@@ -839,9 +814,7 @@ function createWheel() {
 function showWheel() {
   createWheel();
 
-  const availableUsers = users.filter(
-    (user) => !selectedNames.includes(user.name),
-  );
+  const availableUsers = users.filter((user) => !selectedNames.includes(user.name));
 
   console.log(
     '*** Available people (not yet chosen):',
@@ -860,9 +833,7 @@ function showWheel() {
   console.log('*** Current choice:', selectedUser.name);
 
   // Find index in full users array
-  const selectedIndex = users.findIndex(
-    (u) => u.identifier === selectedUser.identifier,
-  );
+  const selectedIndex = users.findIndex((u) => u.identifier === selectedUser.identifier);
 
   // Spin the wheel
   spinWheel(selectedIndex);
@@ -932,9 +903,7 @@ function spinWheel(targetIndex) {
       isSpinning = false;
 
       // Re-enable buttons
-      const chooseBtn = document.querySelector(
-        '.jira-person-picker-choose-btn',
-      );
+      const chooseBtn = document.querySelector('.jira-person-picker-choose-btn');
       const resetBtn = document.querySelector('.jira-person-picker-reset-btn');
       if (chooseBtn) {
         chooseBtn.style.opacity = '1';
@@ -993,18 +962,18 @@ function hideWheel() {
 
 // Find and get overflow button
 function getOverflowButton() {
-  return Array.from(
-    document.querySelectorAll('button, [role="button"], a[role="button"]'),
-  ).find((btn) => {
-    const text = btn.textContent.trim();
-    // Match patterns like "+12", "+5", "Show 12 more", etc.
-    return (
-      /^\+\d+$/.test(text) ||
-      /^\d+\s*more$/i.test(text) ||
-      /show\s+\d+\s*more/i.test(text) ||
-      (text.includes('more') && /\d+/.test(text))
-    );
-  });
+  return Array.from(document.querySelectorAll('button, [role="button"], a[role="button"]')).find(
+    (btn) => {
+      const text = btn.textContent.trim();
+      // Match patterns like "+12", "+5", "Show 12 more", etc.
+      return (
+        /^\+\d+$/.test(text) ||
+        /^\d+\s*more$/i.test(text) ||
+        /show\s+\d+\s*more/i.test(text) ||
+        (text.includes('more') && /\d+/.test(text))
+      );
+    },
+  );
 }
 
 // Check if element is in overflow menu
@@ -1123,12 +1092,7 @@ async function toggleUserFilter(userName, shouldBeActive) {
       menuItem.click();
       await new Promise((resolve) => setTimeout(resolve, 200));
     } else {
-      console.log(
-        '*** Overflow item for',
-        userName,
-        'already',
-        isChecked ? 'active' : 'inactive',
-      );
+      console.log('*** Overflow item for', userName, 'already', isChecked ? 'active' : 'inactive');
     }
     return true;
   }
@@ -1151,17 +1115,11 @@ async function activateUserFilter(user) {
     const isTarget = label.includes(nameLower);
 
     if (cb.checked && !isTarget) {
-      console.log(
-        '*** Deactivating visible filter:',
-        cb.getAttribute('aria-label'),
-      );
+      console.log('*** Deactivating visible filter:', cb.getAttribute('aria-label'));
       cb.click();
       await new Promise((resolve) => setTimeout(resolve, 200));
     } else if (!cb.checked && isTarget) {
-      console.log(
-        '*** Activating visible filter:',
-        cb.getAttribute('aria-label'),
-      );
+      console.log('*** Activating visible filter:', cb.getAttribute('aria-label'));
       cb.click();
       await new Promise((resolve) => setTimeout(resolve, 200));
     }

@@ -34,8 +34,7 @@ const getRandomItem = (arr) => {
   return arr[randomIndex] ?? arr[0];
 };
 
-const pause = (duration) =>
-  new Promise((res) => setTimeout(() => res(), duration));
+const pause = (duration) => new Promise((res) => setTimeout(() => res(), duration));
 
 const debug = DEBUG ? (...args) => console.log('DEBUG:', ...args) : () => null;
 
@@ -48,11 +47,9 @@ const closePopup = () => {
 };
 
 const isAnswerCheckbox = (element) =>
-  element.getAttribute('type') === 'checkbox' &&
-  element.id.startsWith('SAQ_CHECKBOX');
+  element.getAttribute('type') === 'checkbox' && element.id.startsWith('SAQ_CHECKBOX');
 const isAnswerRadio = (element) =>
-  element.getAttribute('type') === 'radio' &&
-  element.id.startsWith('SAQ_RADIO');
+  element.getAttribute('type') === 'radio' && element.id.startsWith('SAQ_RADIO');
 
 const speedUpVideo = () => {
   const videos = [...document.getElementsByTagName('video')];
@@ -66,33 +63,26 @@ const speedUpVideo = () => {
 };
 
 const openHomepageSectionIfAvailable = async () => {
-  const homepageSectionCards =
-    document.getElementsByClassName('ip-tile-card-inner');
+  const homepageSectionCards = document.getElementsByClassName('ip-tile-card-inner');
   debug('Homepage sections', homepageSectionCards);
   if (!homepageSectionCards.length) {
     return;
   }
 
-  const unlockedHomepageSectionCards = [...homepageSectionCards].filter(
-    (section) => {
-      return !section.querySelector('.ip-icon-lock');
-    },
-  );
+  const unlockedHomepageSectionCards = [...homepageSectionCards].filter((section) => {
+    return !section.querySelector('.ip-icon-lock');
+  });
   debug('unlockedHomepageSectionCards', unlockedHomepageSectionCards);
   if (!unlockedHomepageSectionCards.length) {
     return;
   }
 
-  const incompleteHomepageSectionCards = [
-    ...unlockedHomepageSectionCards,
-  ].filter((section) => {
+  const incompleteHomepageSectionCards = [...unlockedHomepageSectionCards].filter((section) => {
     return !section.querySelector('.ip-tile-check');
   });
   debug('incompleteHomepageSectionCards', incompleteHomepageSectionCards);
   if (
-    incompleteHomepageSectionCards.some((section) =>
-      section.innerText.includes('Introduction'),
-    )
+    incompleteHomepageSectionCards.some((section) => section.innerText.includes('Introduction'))
   ) {
     debug('Introduction section found, skipping');
     return;
@@ -108,9 +98,7 @@ const openHomepageSectionIfAvailable = async () => {
 const selectThumnailButtonIfAvailable = () => {
   // get all elements by class ip-ctr-select-thumbnail-btn
   // for each, click it
-  const thumbnailButtons = [
-    ...document.getElementsByClassName('ip-ctr-select-thumbnail-btn'),
-  ];
+  const thumbnailButtons = [...document.getElementsByClassName('ip-ctr-select-thumbnail-btn')];
   debug('thumbnailButtons', thumbnailButtons);
   if (!thumbnailButtons.length) {
     return;
@@ -138,8 +126,8 @@ const selectRandomBinaryOption = () => {
     return;
   }
 
-  const radioInputs = [...document.getElementsByTagName('INPUT')].filter(
-    (input) => input.id.startsWith('RADIO-'),
+  const radioInputs = [...document.getElementsByTagName('INPUT')].filter((input) =>
+    input.id.startsWith('RADIO-'),
   );
   debug('radioInputs', radioInputs);
   if (!radioInputs.length) {
