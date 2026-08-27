@@ -11,18 +11,32 @@
 // ==/UserScript==
 
 (async () => {
-  const pipelineStageButtons = [...document.getElementsByTagName('button')].filter(
-    (e) => e.getAttribute('data-testid') === 'pipeline-mini-graph-dropdown-toggle',
-  );
-  for (let pipelineStateButton of pipelineStageButtons) {
-    pipelineStateButton.click();
-    await new Promise((res) => setTimeout(res, 2000));
-    const cancelButtons = [...document.getElementsByTagName('button')].filter(
-      (e) => e.getAttribute('aria-label') === 'Cancel',
-    );
-    console.log(`canel`, cancelButtons);
-    for (let cancelButton of cancelButtons) {
-      cancelButton.click();
+  let hasCancelled = false;
+  let isTrying = false;
+
+  let interval;
+  interval = setInterval(async () => {
+    if (isTrying) {
+      return;
     }
-  }
+    isTrying = true;
+    const pipelineStageButtons = [...document.getElementsByTagName('button')].filter(
+      (e) => e.getAttribute('data-testid') === 'pipeline-mini-graph-dropdown-toggle',
+    );
+    for (let pipelineStateButton of pipelineStageButtons) {
+      pipelineStateButton.click();
+      await new Promise((res) => setTimeout(res, 1000));
+      const cancelButtons = [...document.getElementsByTagName('button')].filter(
+        (e) => e.getAttribute('aria-label') === 'Cancel',
+      );
+      for (let cancelButton of cancelButtons) {
+        hasCancelled = true;
+        cancelButton.click();
+      }
+    }
+    isTrying = false;
+    if (hasCancelled) {
+      clearInterval(interval);
+    }
+  }, 500);
 })();
