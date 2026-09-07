@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        iHasco
+// @name        GitLab cancel CI jobs
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/gitlab-cancel-ci-jobs
 // @include     *gitlab*
 // @exclude     none
