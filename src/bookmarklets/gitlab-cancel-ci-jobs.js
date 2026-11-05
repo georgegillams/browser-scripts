@@ -3,7 +3,7 @@
 // @namespace   urn://https://www.georgegillams.co.uk/api/greasemonkey/gitlab-cancel-ci-jobs
 // @include     *gitlab*
 // @exclude     none
-// @version     2.0.0
+// @version     2.1.0
 // @description:en	Cancels all running pipeline jobs for a given MR
 // @grant    		none
 // @description Cancels all running pipeline jobs for a given MR
@@ -77,23 +77,38 @@
     headers['X-CSRF-Token'] = csrfToken;
   }
 
-  const pipelinesResp = await fetch(
-    `${baseUrl}/api/v4/projects/${encodedProject}/merge_requests/${mrIid}/pipelines`,
-    { headers },
-  );
-  if (!pipelinesResp.ok) {
-    addToast(`GitLab Cancel CI: Failed to fetch pipelines (${pipelinesResp.status}).`, 'error');
-    return;
-  }
+  const RETRY_INTERVAL_MS = 5000;
+  const RETRY_TIMEOUT_MS = 3 * 60 * 1000;
+  const startTime = Date.now();
 
-  const pipelines = await pipelinesResp.json();
-  const active = pipelines.filter((p) =>
-    ['running', 'pending', 'waiting_for_resource', 'preparing'].includes(p.status),
-  );
+  let active;
+  for (let attempt = 0; ; attempt++) {
+    const pipelinesResp = await fetch(
+      `${baseUrl}/api/v4/projects/${encodedProject}/merge_requests/${mrIid}/pipelines`,
+      { headers },
+    );
+    if (!pipelinesResp.ok) {
+      addToast(`GitLab Cancel CI: Failed to fetch pipelines (${pipelinesResp.status}).`, 'error');
+      return;
+    }
 
-  if (active.length === 0) {
-    addToast('GitLab Cancel CI: No active pipelines found.', 'info');
-    return;
+    const pipelines = await pipelinesResp.json();
+    active = pipelines.filter((p) =>
+      ['running', 'pending', 'waiting_for_resource', 'preparing'].includes(p.status),
+    );
+    if (active.length > 0) break;
+
+    if (Date.now() - startTime + RETRY_INTERVAL_MS > RETRY_TIMEOUT_MS) {
+      addToast('GitLab Cancel CI: No active pipelines found after 3 minutes. Giving up.', 'error');
+      return;
+    }
+    if (attempt === 0) {
+      addToast(
+        'GitLab Cancel CI: No active pipelines yet. Retrying every 5s for up to 3 minutes...',
+        'info',
+      );
+    }
+    await new Promise((resolve) => setTimeout(resolve, RETRY_INTERVAL_MS));
   }
 
   let cancelled = 0;
