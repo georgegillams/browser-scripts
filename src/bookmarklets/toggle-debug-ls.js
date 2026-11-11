@@ -63,8 +63,9 @@
   };
 
   const currentValue = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-  const newValue = currentValue === 'true' ? 'false' : true;
+  const newValue = currentValue === 'true' ? 'false' : 'true';
   window.localStorage.setItem(LOCAL_STORAGE_KEY, newValue);
 
-  addToast(`Debug mode turned ${newValue === 'true' ? 'ON' : 'OFF'}`, 'success');
+  addToast(`Debug mode turned ${newValue === 'true' ? 'ON' : 'OFF'}. Reloading...`, 'success');
+  setTimeout(() => window.location.reload(), 750);
 })();

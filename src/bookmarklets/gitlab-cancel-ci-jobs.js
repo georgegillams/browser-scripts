@@ -60,6 +60,8 @@
     }, 9740);
   };
 
+  addToast('Working on it', 'info');
+
   const mrMatch = window.location.pathname.match(/^\/(.+)\/-\/merge_requests\/(\d+)/);
   if (!mrMatch) {
     addToast('GitLab Cancel CI: Not on a merge request URL. Aborting.', 'error');

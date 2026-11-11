@@ -62,6 +62,8 @@
     }, 9740);
   };
 
+  addToast('Working on it', 'info');
+
   const issueMatch = window.location.pathname.match(/\/browse\/([A-Z][A-Z0-9]+-\d+)/);
   if (!issueMatch) {
     addToast('Jira CMSS Label: Not on a Jira issue URL. Aborting.', 'error');

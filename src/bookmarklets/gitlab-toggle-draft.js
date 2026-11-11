@@ -60,6 +60,8 @@
     }, 9740);
   };
 
+  addToast('Working on it', 'info');
+
   const updatePageTitle = (newTitle) => {
     const selectors = [
       '.merge-request-title-text',
